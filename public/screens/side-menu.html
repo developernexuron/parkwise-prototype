@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Side Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100',
+                            swishBlue: '#005596',
+                            blue: '#444CE7',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="side-menu">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-black/40 text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Drawer Menu (Slide out from right) -->
+        <div id="side-menu-drawer" class="absolute top-0 right-0 w-[300px] h-full bg-[#F9FAFB] shadow-[-8px_0_24px_rgba(20,34,58,0.15)] z-40 flex flex-col transform transition-transform duration-300 translate-x-0 overflow-hidden">
+            
+            <!-- Profile Header -->
+            <div class="px-5 pt-12 pb-6 bg-white border-b border-brand-navy/5 flex flex-col gap-4">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-brand-navy/10 bg-[#F9FAFB]">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="User Avatar" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex flex-col">
+                            <h2 class="text-[16px] font-bold text-brand-navy leading-tight">Alex Johansson</h2>
+                            <p class="text-[12px] text-brand-navy/60">alex.j@example.com</p>
+                        </div>
+                    </div>
+                    <button class="w-8 h-8 flex items-center justify-center rounded-full bg-brand-navy/5 text-brand-navy hover:bg-brand-navy/10 transition-colors">
+                        <i class="fa-solid fa-xmark text-[16px]"></i>
+                    </button>
+                </div>
+                
+                <!-- Plan Badge -->
+                <div class="flex items-center gap-2 mt-2">
+                    <div class="px-2.5 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20 flex items-center gap-1.5">
+                        <i class="fa-solid fa-crown text-[10px] text-brand-gold"></i>
+                        <span class="text-[11px] font-bold text-brand-gold">Premium Member</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scrollable Links List -->
+            <div class="flex-1 overflow-y-auto hide-scrollbar py-4 px-3 flex flex-col gap-6">
+                
+                <!-- Navigation Group -->
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-[11px] font-semibold text-brand-navy/40 uppercase tracking-wider px-3 mb-1">Navigation</h3>
+                    
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-map text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Home Map</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-bolt text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">EV Charging Map</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-broom text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Street Cleaning Map</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+                </div>
+
+                <!-- Services Group -->
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-[11px] font-semibold text-brand-navy/40 uppercase tracking-wider px-3 mb-1">Services</h3>
+                    
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-clock-rotate-left text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Bookings History</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-camera text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Sign Scanner</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors relative">
+                                <i class="fa-solid fa-bell text-[14px]"></i>
+                                <div class="absolute top-1 right-1 w-2 h-2 bg-brand-danger rounded-full border-2 border-[#F9FAFB]"></div>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Notifications</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-bold text-white bg-brand-danger px-1.5 py-0.5 rounded-full">3</span>
+                            <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Account Group -->
+                <div class="flex flex-col gap-1">
+                    <h3 class="text-[11px] font-semibold text-brand-navy/40 uppercase tracking-wider px-3 mb-1">Account & Support</h3>
+                    
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-user text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Profile Details</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-car text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Vehicles & Places</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-crown text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Subscriptions</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-circle-exclamation text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Report Issue</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-regular fa-comment-dots text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Feedback</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+                    
+                    <button class="w-full flex items-center justify-between px-3 py-3 rounded-[12px] hover:bg-brand-navy/5 transition-colors group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy group-hover:text-white transition-colors">
+                                <i class="fa-solid fa-shield-halved text-[14px]"></i>
+                            </div>
+                            <span class="text-[14px] font-medium text-brand-navy">Privacy & Terms</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/20 group-hover:text-brand-navy/40"></i>
+                    </button>
+                </div>
+
+                <!-- Marker Legend -->
+                <div class="mx-3 mt-2 bg-white rounded-[16px] p-4 border border-brand-navy/5 shadow-[0_2px_8px_rgba(20,34,58,0.04)]">
+                    <h3 class="text-[11px] font-semibold text-brand-navy/60 uppercase tracking-wider mb-3">Map Legend</h3>
+                    <div class="flex flex-col gap-2.5">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#28A745]"></div>
+                            <span class="text-[12px] text-brand-navy">Free Parking</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#E6A129]"></div>
+                            <span class="text-[12px] text-brand-navy">Paid Parking</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#444CE7]"></div>
+                            <span class="text-[12px] text-brand-navy">EV Charging</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#DC3545]"></div>
+                            <span class="text-[12px] text-brand-navy">No Parking / Restricted</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 rounded-full bg-[#8E8E93]"></div>
+                            <span class="text-[12px] text-brand-navy">Street Cleaning</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logout Action -->
+                <div class="px-3 pt-4 pb-20">
+                    <button class="w-full flex items-center justify-center gap-2 h-[48px] rounded-[12px] bg-brand-danger/5 text-brand-danger font-medium hover:bg-brand-danger/10 transition-colors">
+                        <i class="fa-solid fa-arrow-right-from-bracket text-[14px]"></i>
+                        <span class="text-[14px]">Log Out</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved exactly from context, Menu Active) -->
+        <div id="footer" class="absolute bottom-0 left-0 w-full z-50 flex flex-col pointer-events-none">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5 pointer-events-auto">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Side Menu (Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-bars text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Menu</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

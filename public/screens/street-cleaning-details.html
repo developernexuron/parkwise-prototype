@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Street Cleaning Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100', // Swish yellow
+                            swishBlue: '#005596', // Swish blue
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="street-cleaning-details">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header -->
+        <div class="px-6 pt-12 pb-4 z-30 w-full flex flex-col gap-4 bg-white sticky top-0 border-b border-brand-navy/5">
+            <div class="flex items-center justify-between">
+                <button class="w-10 h-10 flex items-center justify-start text-brand-navy hover:opacity-70 transition-opacity">
+                    <i class="fa-solid fa-xmark text-[24px]"></i>
+                </button>
+            </div>
+            
+            <div class="mt-2">
+                <h1 class="text-[28px] font-bold tracking-tight text-brand-navy leading-tight mb-2">Sveavägen 44</h1>
+                <div class="flex items-center gap-2 text-brand-navy/80">
+                    <i class="fa-regular fa-message text-[14px]"></i>
+                    <p class="text-[14px] font-medium">High risk of parking fine tomorrow.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto hide-scrollbar pb-[180px] bg-white">
+            
+            <!-- Risk Level Banner -->
+            <div class="px-6 py-6 border-b border-brand-navy/5">
+                <div class="flex items-start gap-4">
+                    <div class="w-6 h-6 rounded-full border-2 border-brand-navy flex items-center justify-center mt-0.5 shrink-0">
+                        <span class="text-[12px] font-bold">1</span>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-[16px] font-bold text-brand-navy mb-1">Risk Level: High</h2>
+                        <p class="text-[14px] text-brand-navy/80 mb-3 leading-relaxed">Street cleaning is scheduled for tomorrow. Moving your vehicle is strongly advised to avoid fines.</p>
+                        <div class="inline-flex items-center justify-center bg-brand-navy/5 rounded-[20px] px-4 py-2 font-bold text-[14px] text-brand-navy border border-brand-navy/10">
+                            See affected side
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Rules -->
+            <div class="px-6 py-6 border-b border-brand-navy/5">
+                 <div class="flex items-start gap-4">
+                    <div class="w-6 h-6 rounded-full border-2 border-brand-navy flex items-center justify-center mt-0.5 shrink-0">
+                        <span class="text-[12px] font-bold">2</span>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-[16px] font-bold text-brand-navy mb-1">Schedule Rules</h2>
+                        <div class="flex flex-col gap-3 mt-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-regular fa-calendar text-brand-navy/60 text-[14px]"></i>
+                                    <span class="text-[14px] text-brand-navy/80">Next occurrence</span>
+                                </div>
+                                <span class="text-[14px] font-bold text-brand-navy">Tomorrow, 08:00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-regular fa-clock text-brand-navy/60 text-[14px]"></i>
+                                    <span class="text-[14px] text-brand-navy/80">Duration</span>
+                                </div>
+                                <span class="text-[14px] font-bold text-brand-navy">08:00 - 12:00</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-repeat text-brand-navy/60 text-[14px]"></i>
+                                    <span class="text-[14px] text-brand-navy/80">Frequency</span>
+                                </div>
+                                <span class="text-[14px] font-bold text-brand-navy">Every 1st Tuesday</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Affected Side Visualization -->
+             <div class="px-6 py-6 border-b border-brand-navy/5">
+                 <div class="flex items-start gap-4">
+                    <div class="w-6 h-6 rounded-full border-2 border-brand-navy flex items-center justify-center mt-0.5 shrink-0">
+                        <span class="text-[12px] font-bold">3</span>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-[16px] font-bold text-brand-navy mb-1">Affected Side</h2>
+                        <p class="text-[14px] text-brand-navy/80 mb-4">Cleaning applies to the North side of the street (even numbers).</p>
+                        
+                        <!-- Simple visual representation -->
+                        <div class="bg-brand-navy/5 rounded-[12px] p-4 border border-brand-navy/10 relative overflow-hidden h-[100px] flex flex-col justify-between">
+                            <div class="w-full h-8 bg-brand-danger/20 rounded-[4px] flex items-center justify-center border border-brand-danger/30">
+                                <span class="text-[10px] font-bold text-brand-danger uppercase tracking-wider">No Parking Tomorrow</span>
+                            </div>
+                            <div class="w-full h-1 border-t-2 border-dashed border-brand-navy/20 absolute top-1/2 left-0 transform -translate-y-1/2"></div>
+                            <div class="w-full h-8 bg-brand-success/10 rounded-[4px] flex items-center justify-center border border-brand-success/20">
+                                <span class="text-[10px] font-bold text-brand-success uppercase tracking-wider">Safe</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Action Area -->
+        <div class="absolute bottom-[90px] left-0 w-full px-6 py-4 bg-gradient-to-t from-white via-white to-white/0 z-40">
+            <div class="flex flex-col gap-3">
+                <button class="w-full h-[52px] bg-brand-danger text-white rounded-[26px] font-bold text-[16px] shadow-lg hover:bg-brand-danger/90 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-bell text-[16px]"></i> Set alert for this street
+                </button>
+                <button class="w-full h-[52px] bg-brand-navy/5 text-brand-navy rounded-[26px] font-bold text-[16px] border border-brand-navy/10 hover:bg-brand-navy/10 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-regular fa-eye text-[16px]"></i> Watch this street
+                </button>
+            </div>
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved from context) -->
+        <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Profile -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-regular fa-user text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Profile</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

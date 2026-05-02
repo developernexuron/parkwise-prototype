@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Booking Step 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100', // Swish yellow
+                            swishBlue: '#005596', // Swish blue
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Input styling to match reference */
+        .ref-input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border: 1px solid #E5E7EB;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #111827;
+            background-color: #FFFFFF;
+            transition: border-color 0.2s;
+        }
+        .ref-input:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 1px #3B82F6;
+        }
+        .ref-input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6B7280;
+            font-size: 16px;
+        }
+        .ref-input-right-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6B7280;
+            font-size: 16px;
+        }
+
+        /* Payment Method Radio Button */
+        .payment-radio:checked + div {
+            border-color: #3B82F6;
+            background-color: #EFF6FF;
+        }
+        .payment-radio:checked + div .radio-inner {
+            border-color: #3B82F6;
+        }
+        .payment-radio:checked + div .radio-dot {
+            background-color: #3B82F6;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="booking-step-2">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header / Progress Bar -->
+        <div class="px-6 pt-12 pb-4 bg-white z-30 sticky top-0 border-b border-gray-100 flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+                <button class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-brand-navy hover:bg-gray-100 transition-colors">
+                    <i class="fa-solid fa-arrow-left text-[16px]"></i>
+                </button>
+                <div class="flex flex-col items-center">
+                    <span class="text-[12px] font-medium text-gray-500 uppercase tracking-wide">Step 2 of 3</span>
+                    <h1 class="text-[16px] font-bold text-brand-navy">Payment Method</h1>
+                </div>
+                <div class="w-10 h-10"></div> <!-- Spacer for balance -->
+            </div>
+            
+            <!-- Progress Indicator -->
+            <div class="w-full flex gap-2">
+                <div class="h-1.5 flex-1 bg-brand-success rounded-full"></div>
+                <div class="h-1.5 flex-1 bg-brand-navy rounded-full"></div>
+                <div class="h-1.5 flex-1 bg-gray-200 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content -->
+        <div class="flex-1 overflow-y-auto hide-scrollbar px-6 pb-32 bg-white">
+            
+            <!-- Error State Banner (Hidden by default, shown for example) -->
+            <div class="mt-6 mb-2 bg-brand-danger/10 border border-brand-danger/20 rounded-lg p-3 flex items-start gap-3">
+                <i class="fa-solid fa-circle-exclamation text-brand-danger mt-0.5"></i>
+                <div class="flex-1">
+                    <p class="text-[13px] text-brand-danger font-medium leading-tight">Payment failed, please try again or use a different method.</p>
+                </div>
+            </div>
+
+            <!-- Payment Method Selection (Reference Style) -->
+            <div class="mt-6">
+                <h2 class="text-[16px] font-bold text-[#1E293B] mb-4">Payment Method</h2>
+                
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <!-- Card Option -->
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="payment_method" value="card" class="payment-radio sr-only" checked>
+                        <div class="border border-[#E2E8F0] rounded-md p-4 flex items-center justify-between transition-colors">
+                            <span class="text-[14px] font-medium text-[#334155]">Credit Card</span>
+                            <div class="w-5 h-5 rounded-full border-2 border-[#CBD5E1] radio-inner flex items-center justify-center transition-colors">
+                                <div class="w-2.5 h-2.5 rounded-full bg-transparent radio-dot transition-transform scale-0"></div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <!-- Swish Option -->
+                    <label class="cursor-pointer relative">
+                        <input type="radio" name="payment_method" value="swish" class="payment-radio sr-only">
+                        <div class="border border-[#E2E8F0] rounded-md p-4 flex items-center justify-between transition-colors">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-brand-swishBlue italic text-[14px]">Swish</span>
+                            </div>
+                            <div class="w-5 h-5 rounded-full border-2 border-[#CBD5E1] radio-inner flex items-center justify-center transition-colors">
+                                <div class="w-2.5 h-2.5 rounded-full bg-transparent radio-dot transition-transform scale-0"></div>
+                            </div>
+                        </div>
+                    </label>
+                    
+                    <!-- Apple Pay Option -->
+                    <label class="cursor-pointer relative col-span-2">
+                        <input type="radio" name="payment_method" value="applepay" class="payment-radio sr-only">
+                        <div class="border border-[#E2E8F0] rounded-md p-4 flex items-center justify-between transition-colors">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-brands fa-apple text-[18px]"></i>
+                                <span class="text-[14px] font-medium text-[#334155]">Apple Pay</span>
+                            </div>
+                            <div class="w-5 h-5 rounded-full border-2 border-[#CBD5E1] radio-inner flex items-center justify-center transition-colors">
+                                <div class="w-2.5 h-2.5 rounded-full bg-transparent radio-dot transition-transform scale-0"></div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Card Details Form (Reference Style) -->
+            <div class="mb-8">
+                <h3 class="text-[16px] font-bold text-[#1E293B] mb-4">Card Details</h3>
+                
+                <div class="flex flex-col gap-4">
+                    <!-- Email -->
+                    <div>
+                        <label class="block text-[12px] text-[#64748B] mb-1.5">Email</label>
+                        <div class="relative">
+                            <i class="fa-regular fa-envelope ref-input-icon"></i>
+                            <input type="email" class="ref-input" placeholder="your.email@example.com" value="user@example.com">
+                        </div>
+                    </div>
+
+                    <!-- Card Number -->
+                    <div>
+                        <label class="block text-[12px] text-[#64748B] mb-1.5">Card Number</label>
+                        <div class="relative">
+                            <i class="fa-regular fa-credit-card ref-input-icon"></i>
+                            <input type="text" class="ref-input" placeholder="0000 0000 0000 0000" value="4242 4242 4242 4242">
+                            <i class="fa-brands fa-cc-visa ref-input-right-icon text-brand-navy"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card Holder -->
+                    <div>
+                        <label class="block text-[12px] text-[#64748B] mb-1.5">Card Holder</label>
+                        <div class="relative">
+                            <i class="fa-regular fa-user ref-input-icon"></i>
+                            <input type="text" class="ref-input" placeholder="Name on card" value="John Doe">
+                        </div>
+                    </div>
+
+                    <!-- Exp & CVV Grid -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[12px] text-[#64748B] mb-1.5">Exp</label>
+                            <div class="relative">
+                                <i class="fa-regular fa-calendar ref-input-icon"></i>
+                                <input type="text" class="ref-input" placeholder="MM/YY" value="12/25">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[12px] text-[#64748B] mb-1.5">Cvv2</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-lock ref-input-icon"></i>
+                                <input type="text" class="ref-input" placeholder="123" value="***">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Promo Code Section -->
+            <div class="mb-8 border-t border-gray-100 pt-6">
+                <h3 class="text-[14px] font-bold text-[#1E293B] mb-3">Have A Voucher Code</h3>
+                <div class="flex">
+                    <input type="text" class="flex-1 border border-[#E2E8F0] rounded-l-md px-4 py-2.5 text-[14px] focus:outline-none focus:border-brand-navy" placeholder="Enter Voucher Code">
+                    <button class="bg-[#3B82F6] text-white px-6 py-2.5 rounded-r-md text-[14px] font-medium hover:bg-blue-600 transition-colors">Apply</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Action Bar (Sticky) -->
+        <div class="absolute bottom-[72px] left-0 w-full bg-white border-t border-gray-100 px-6 py-4 z-40 shadow-[0_-8px_30px_rgba(0,0,0,0.08)]">
+            <!-- Price Breakdown -->
+            <div class="flex flex-col gap-2 mb-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-[13px] text-gray-500">Subtotal (1 hr):</span>
+                    <span class="text-[14px] font-medium text-brand-navy">45 kr</span>
+                </div>
+                <div class="flex justify-between items-center text-brand-success">
+                    <span class="text-[13px]">First booking promo:</span>
+                    <span class="text-[14px] font-medium">-10 kr</span>
+                </div>
+                <div class="flex justify-between items-center mt-1 pt-2 border-t border-gray-100">
+                    <span class="text-[14px] font-bold text-brand-navy">Total to pay:</span>
+                    <span class="text-[18px] font-bold text-brand-navy">35 kr</span>
+                </div>
+            </div>
+            
+            <button class="w-full h-14 bg-[#1E293B] text-white rounded-[4px] font-semibold text-[16px] flex items-center justify-center gap-2 hover:bg-[#0F172A] transition-colors">
+                Confirm & Pay
+            </button>
+        </div>
+
+        <!-- BOTTOM UI: Navigation -->
+        <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50">
+                
+                <!-- Home Map (Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy">
+                    <div class="w-12 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Activity</span>
+                </button>
+
+                <!-- Profile -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-regular fa-user text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Profile</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

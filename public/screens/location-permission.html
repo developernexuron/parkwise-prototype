@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Location Permission</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        /* Pulse animation for map pin */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        .animate-pulse-ring::before {
+            content: '';
+            position: absolute;
+            left: -50%;
+            top: -50%;
+            width: 200%;
+            height: 200%;
+            background-color: #E6A129;
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="location-permission">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col justify-between px-6 py-10 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header (Back / Skip) -->
+        <div id="onboarding-header" class="flex justify-between items-center w-full pt-2 z-20">
+            <!-- Back Button -->
+            <button class="text-sm font-semibold text-gray-400 hover:text-brand-navy transition-colors px-2 py-1 flex items-center gap-1">
+                <i class="fa-solid fa-chevron-left text-xs"></i> Back
+            </button>
+            
+            <!-- Skip Button -->
+            <button class="text-sm font-semibold text-gray-400 hover:text-brand-navy transition-colors px-2 py-1">
+                Skip
+            </button>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col mt-6 z-10 animate-fade-in relative overflow-y-auto pb-4" style="scrollbar-width: none;">
+            
+            <!-- Map Preview Section -->
+            <div id="map-preview" class="w-full h-48 rounded-[20px] bg-[#F0F4F8] mb-8 relative overflow-hidden shadow-inner flex items-center justify-center border border-gray-100">
+                <!-- Abstract Map Pattern (SVG placeholder for map) -->
+                <svg class="absolute inset-0 w-full h-full text-gray-200 opacity-50" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0,50 Q100,20 200,80 T400,30" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M-50,120 Q150,180 250,90 T450,150" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M100,-20 L120,220" fill="none" stroke="currentColor" stroke-width="6" stroke-dasharray="10 10"/>
+                    <path d="M280,-20 L250,220" fill="none" stroke="currentColor" stroke-width="8"/>
+                    <rect x="180" y="60" width="40" height="30" rx="4" fill="currentColor" opacity="0.3"/>
+                    <rect x="80" y="140" width="60" height="40" rx="4" fill="currentColor" opacity="0.3"/>
+                    <rect x="280" y="110" width="50" height="50" rx="4" fill="currentColor" opacity="0.3"/>
+                </svg>
+
+                <!-- Pulsing Location Pin -->
+                <div class="relative z-10 animate-pulse-ring w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+                    <div class="w-8 h-8 bg-brand-gold rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-location-dot text-white text-sm"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typography & Copy -->
+            <div class="text-center px-2 mb-8">
+                <h1 class="text-[28px] leading-[1.2] font-bold text-brand-navy mb-3 tracking-tight">
+                    Find Parking <br>
+                    <span class="text-brand-gold">Near You</span>
+                </h1>
+                <p class="text-[15px] text-gray-500 font-medium leading-relaxed">
+                    ParkWise needs your location to show available spots, street cleaning alerts, and AI sign scanning in Stockholm.
+                </p>
+            </div>
+
+            <!-- Benefits Grid -->
+            <div id="benefits-grid" class="space-y-4 px-2 mb-8">
+                <!-- Benefit 1 -->
+                <div class="flex items-start gap-4 p-4 rounded-[16px] bg-gray-50 border border-gray-100">
+                    <div class="w-10 h-10 rounded-full bg-brand-gold/10 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-square-parking text-brand-gold"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-[15px] font-bold text-brand-navy mb-1">Nearby Parking</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">Instantly see free, paid, and EV spots around your current location.</p>
+                    </div>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="flex items-start gap-4 p-4 rounded-[16px] bg-gray-50 border border-gray-100">
+                    <div class="w-10 h-10 rounded-full bg-brand-gold/10 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-camera-retro text-brand-gold"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-[15px] font-bold text-brand-navy mb-1">AI Sign Scanning</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">Scan complex Stockholm parking signs to know exactly when and where you can park.</p>
+                    </div>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="flex items-start gap-4 p-4 rounded-[16px] bg-gray-50 border border-gray-100">
+                    <div class="w-10 h-10 rounded-full bg-brand-gold/10 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-broom text-brand-gold"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-[15px] font-bold text-brand-navy mb-1">Street Cleaning Reminders</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">Get alerts before street cleaning starts on the block you're parked on.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Denied State Guidance (Hidden by default, shown conditionally) -->
+            <!-- Uncomment to view state: 
+            <div id="denied-state-guidance" class="px-4 py-3 mb-6 bg-brand-danger/5 rounded-[12px] border border-brand-danger/20 flex items-start gap-3">
+                <i class="fa-solid fa-circle-exclamation text-brand-danger mt-0.5"></i>
+                <div>
+                    <h4 class="text-sm font-bold text-brand-danger mb-1">Location Access Denied</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed mb-2">
+                        You previously declined location access. To use ParkWise, please enable it in your device settings.
+                    </p>
+                    <button class="text-xs font-bold text-brand-navy underline hover:text-brand-gold transition-colors">
+                        Open Settings
+                    </button>
+                </div>
+            </div>
+            -->
+            
+            <!-- Spacer to push buttons to bottom -->
+            <div class="flex-grow"></div>
+            
+            <!-- Action Stack -->
+            <div id="permission-actions" class="flex flex-col gap-3 mt-auto shrink-0 w-full">
+                <!-- Primary CTA -->
+                <button class="w-full bg-brand-navy hover:bg-[#1E3354] text-white font-bold py-4 px-6 rounded-[16px] transition-colors shadow-[0_8px_20px_rgba(20,34,58,0.2)] flex items-center justify-center gap-2 group">
+                    <i class="fa-solid fa-location-arrow"></i>
+                    Allow While Using App
+                </button>
+                
+                <!-- Secondary Action -->
+                <button class="w-full py-4 px-6 rounded-[16px] text-sm font-bold text-gray-500 hover:text-brand-navy hover:bg-gray-50 transition-colors">
+                    Not now
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

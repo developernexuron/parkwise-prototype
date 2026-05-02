@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Home Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93'
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Map Marker Pulse Animation */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
+        .marker-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Map background pattern */
+        .map-bg {
+            background-color: #f0f3f5;
+            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="home-map">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- MAP LAYER (Background) -->
+        <div id="map-layer" class="absolute inset-0 z-0 map-bg">
+            <!-- Simulated Map Image -->
+            <img class="w-full h-full object-cover opacity-80" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d213804645-e539f9f5e153e30e58c2.png" alt="Clean minimal light-themed street map, mobile map UI" />
+            
+            <!-- Map Markers -->
+            <!-- Free Parking (Green) -->
+            <div class="absolute top-[30%] left-[40%] transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <div class="relative group cursor-pointer">
+                    <div class="w-10 h-10 bg-[#28A745] rounded-full flex items-center justify-center shadow-lg border-2 border-white marker-pulse">
+                        <i class="fa-solid fa-parking text-white text-[16px]"></i>
+                    </div>
+                    <div class="absolute top-12 left-1/2 transform -translate-x-1/2 bg-white px-2 py-1 rounded-md shadow-md text-[12px] font-bold text-brand-navy whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                        3 spots
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paid Parking (Orange) -->
+            <div class="absolute top-[45%] left-[65%] transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <div class="relative group cursor-pointer">
+                    <div class="w-10 h-10 bg-[#E6A129] rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+                        <i class="fa-solid fa-coins text-white text-[14px]"></i>
+                    </div>
+                    <div class="absolute top-12 left-1/2 transform -translate-x-1/2 bg-white px-2 py-1 rounded-md shadow-md text-[12px] font-bold text-brand-navy whitespace-nowrap">
+                        45 kr/h
+                    </div>
+                </div>
+            </div>
+
+            <!-- EV Charging (Blue) -->
+            <div class="absolute top-[60%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <div class="relative group cursor-pointer">
+                    <div class="w-10 h-10 bg-[#007AFF] rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+                        <i class="fa-solid fa-bolt text-white text-[16px]"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Restricted (Red) -->
+            <div class="absolute top-[25%] left-[75%] transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <div class="relative group cursor-pointer">
+                    <div class="w-8 h-8 bg-[#DC3545] rounded-full flex items-center justify-center shadow-lg border-2 border-white opacity-80">
+                        <i class="fa-solid fa-ban text-white text-[12px]"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Street Cleaning (Grey) -->
+            <div class="absolute top-[55%] left-[80%] transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <div class="relative group cursor-pointer">
+                    <div class="w-8 h-8 bg-[#8E8E93] rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+                        <i class="fa-solid fa-broom text-white text-[12px]"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Location -->
+            <div class="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 z-10">
+                <div class="w-6 h-6 bg-[#007AFF] rounded-full border-4 border-white shadow-md"></div>
+                <div class="absolute inset-0 bg-[#007AFF] rounded-full animate-ping opacity-30"></div>
+            </div>
+        </div>
+
+        <!-- TOP UI LAYER -->
+        <div id="top-ui" class="absolute top-0 left-0 w-full z-20 pointer-events-none flex flex-col pt-12 px-4 gap-4">
+            
+            <!-- Search & Menu Bar -->
+            <div class="flex items-center gap-3 w-full pointer-events-auto">
+                <!-- Side Menu Toggle -->
+                <button class="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center text-brand-navy hover:bg-gray-50 transition-colors shrink-0">
+                    <i class="fa-solid fa-bars text-[18px]"></i>
+                </button>
+                
+                <!-- Search Input -->
+                <div class="flex-1 relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                    </div>
+                    <input type="text" placeholder="Search destination..." class="w-full h-12 bg-white rounded-full pl-11 pr-4 text-[15px] font-medium text-brand-navy shadow-md focus:outline-none focus:ring-2 focus:ring-brand-gold border-none placeholder:text-gray-400">
+                </div>
+
+                <!-- Notifications -->
+                <button class="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center text-brand-navy hover:bg-gray-50 transition-colors shrink-0 relative">
+                    <i class="fa-regular fa-bell text-[18px]"></i>
+                    <span class="absolute top-3 right-3 w-2.5 h-2.5 bg-brand-danger rounded-full border-2 border-white"></span>
+                </button>
+            </div>
+
+            <!-- Filter Chips (Scrollable) -->
+            <div class="flex gap-2 overflow-x-auto hide-scrollbar pointer-events-auto pb-2 -mx-4 px-4">
+                <button class="h-9 px-4 bg-brand-navy text-white rounded-full text-[13px] font-semibold whitespace-nowrap shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-[12px]"></i>
+                    All
+                </button>
+                <button class="h-9 px-4 bg-white text-brand-navy rounded-full text-[13px] font-semibold whitespace-nowrap shadow-sm border border-gray-100 flex items-center gap-2 hover:bg-gray-50">
+                    <span class="w-2 h-2 rounded-full bg-[#28A745]"></span>
+                    Free
+                </button>
+                <button class="h-9 px-4 bg-white text-brand-navy rounded-full text-[13px] font-semibold whitespace-nowrap shadow-sm border border-gray-100 flex items-center gap-2 hover:bg-gray-50">
+                    <span class="w-2 h-2 rounded-full bg-[#E6A129]"></span>
+                    Paid
+                </button>
+                <button class="h-9 px-4 bg-white text-brand-navy rounded-full text-[13px] font-semibold whitespace-nowrap shadow-sm border border-gray-100 flex items-center gap-2 hover:bg-gray-50">
+                    <span class="w-2 h-2 rounded-full bg-[#007AFF]"></span>
+                    EV
+                </button>
+                <button class="h-9 px-4 bg-white text-brand-navy rounded-full text-[13px] font-semibold whitespace-nowrap shadow-sm border border-gray-100 flex items-center gap-2 hover:bg-gray-50">
+                    <span class="w-2 h-2 rounded-full bg-[#8E8E93]"></span>
+                    Cleaning
+                </button>
+            </div>
+
+            <!-- Live Refresh Indicator -->
+            <div class="self-center bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm flex items-center gap-2 pointer-events-auto mt-2">
+                <div class="w-2 h-2 bg-brand-success rounded-full animate-pulse"></div>
+                <span class="text-[11px] font-bold text-gray-600 uppercase tracking-wider">Live • 60s</span>
+            </div>
+        </div>
+
+        <!-- FLOATING ACTION BUTTONS -->
+        <div class="absolute bottom-[180px] right-4 flex flex-col gap-3 z-20">
+            <button class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-brand-navy hover:bg-gray-50 transition-colors">
+                <i class="fa-solid fa-location-crosshairs text-[18px]"></i>
+            </button>
+            <button class="w-14 h-14 bg-brand-navy rounded-full shadow-lg flex items-center justify-center text-brand-gold hover:bg-[#1E3354] transition-colors border-2 border-white">
+                <i class="fa-solid fa-camera text-[20px]"></i>
+            </button>
+        </div>
+
+        <!-- BOTTOM UI: Active Booking Peek & Navigation -->
+        <div class="absolute bottom-0 left-0 w-full z-30 flex flex-col">
+            
+            <!-- Active Booking Peek Sheet -->
+            <div class="px-4 pb-4">
+                <div class="bg-brand-navy rounded-[20px] p-4 shadow-xl flex items-center justify-between border border-[#1E3354]">
+                    <div class="flex items-center gap-4">
+                        <!-- Progress Ring Timer -->
+                        <div class="relative w-12 h-12 flex items-center justify-center">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                <path class="text-[#1E3354]" stroke-width="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="text-brand-gold" stroke-dasharray="75, 100" stroke-width="3" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            </svg>
+                            <div class="absolute text-[11px] font-bold text-white">45m</div>
+                        </div>
+                        
+                        <div class="flex flex-col">
+                            <span class="text-[12px] text-gray-400 font-medium mb-0.5">Active Booking</span>
+                            <span class="text-[15px] font-bold text-white">Covent Garden</span>
+                            <span class="text-[12px] text-brand-gold font-medium mt-0.5">Zone A • A5</span>
+                        </div>
+                    </div>
+                    
+                    <button class="w-10 h-10 bg-[#1E3354] rounded-full flex items-center justify-center text-white hover:bg-[#2A4165] transition-colors">
+                        <i class="fa-solid fa-chevron-up text-[14px]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-40">
+                
+                <!-- Home Map (Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy">
+                    <div class="w-12 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Activity</span>
+                </button>
+
+                <!-- Profile -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-regular fa-user text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Profile</span>
+                </button>
+            </div>
+            
+        </div>
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

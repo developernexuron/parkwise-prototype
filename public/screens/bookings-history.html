@@ -1,0 +1,431 @@
+<html lang="en">
+
+  <head>
+    <script>
+      window.FontAwesomeConfig = {
+        autoReplaceSvg: 'nest'
+      };
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Bookings History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+      tailwind.config = {
+        theme:
+        {
+          extend:
+          {
+            fontFamily:
+            {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors:
+            {
+              brand:
+              {
+                navy: '#14223A',
+                gold: '#E6A129',
+                success: '#28A745',
+                danger: '#DC3545',
+                gray: '#1C1C1E',
+                lightGray: '#2C2C2E',
+                muted: '#8E8E93',
+                swish: '#FFD100', // Swish yellow
+                swishBlue: '#005596', // Swish blue
+              }
+            },
+            backgroundImage:
+            {
+              'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body
+      {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: #14223A;
+        color: #FFFFFF;
+        overflow: hidden;
+      }
+
+      .hide-scrollbar::-webkit-scrollbar
+      {
+        display: none;
+      }
+
+      .hide-scrollbar
+      {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Segmented Control */
+      .segmented-control input[type="radio"]
+      {
+        display: none;
+      }
+
+      .segmented-control label
+      {
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .segmented-control input[type="radio"]:checked+label
+      {
+        background-color: #14223A;
+        color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Drawer Animation */
+      #booking-drawer
+      {
+        transition: transform 0.3s ease-in-out;
+        transform: translateY(100%);
+      }
+
+      #booking-drawer.open
+      {
+        transform: translateY(0);
+      }
+
+      /* Dashed divider */
+      .dashed-divider
+      {
+        border-top: 2px dashed #E2E8F0;
+      }
+    </style>
+    <style data-grapesjs-styles="true">
+      #booking-drawer
+      {
+        transition-behavior: normal;
+        transition-duration: 0.3s;
+        transition-timing-function: ease-in-out;
+        transition-delay: 0s;
+        transition-property: transform;
+        transform: translateY(100%);
+      }
+    </style>
+  </head>
+
+  <body
+    class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="bookings-history">
+    <!-- Mobile Container Wrapper -->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Bookings History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <div id="app-container"
+      class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+      <!-- Header -->
+      <div
+        class="px-6 pt-12 pb-4 bg-white z-30 sticky top-0 border-b border-gray-100 flex flex-col gap-4">
+        <div class="flex items-center justify-between"><button
+            class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-brand-navy hover:bg-gray-100 transition-colors"><i
+              class="fa-solid fa-arrow-left text-[16px]"></i></button>
+          <h1 class="text-[18px] font-bold text-brand-navy">Bookings</h1>
+        </div><!-- Search & Filter Bar -->
+        <div class="flex items-center gap-3">
+          <div class="flex-1 relative"><i
+              class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i><input
+              type="text" placeholder="Search bookings..."
+              class="w-full h-11 pl-10 pr-4 bg-gray-50 rounded-[12px] text-[14px] text-brand-navy placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand-navy/20">
+          </div><button
+            class="w-11 h-11 rounded-[12px] bg-gray-50 flex items-center justify-center text-brand-navy hover:bg-gray-100 transition-colors"><i
+              class="fa-solid fa-sliders text-[16px]"></i></button>
+        </div><!-- Segmented Tabs -->
+        <div class="segmented-control bg-gray-50 p-1 rounded-[14px] flex mt-2">
+          <input type="radio" name="booking-tab" id="tab-upcoming"
+            checked=""><label for="tab-upcoming"
+            class="flex-1 text-center py-2 text-[14px] font-semibold text-gray-500 rounded-[10px]">Active</label><input
+            type="radio" name="booking-tab" id="tab-past"><label for="tab-past"
+            class="flex-1 text-center py-2 text-[14px] font-semibold text-gray-500 rounded-[10px]">Past</label>
+        </div>
+      </div><!-- Main Scrollable Content -->
+      <div
+        class="flex-1 overflow-y-auto hide-scrollbar px-6 pb-32 bg-gray-50 pt-6 flex flex-col gap-4">
+        <!-- Active Booking Card -->
+        <div
+          onclick="document.getElementById('booking-drawer').classList.add('open')"
+          class="bg-white rounded-[20px] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 cursor-pointer">
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-12 h-12 rounded-[12px] bg-[#EBF5FF] flex items-center justify-center text-[#3B82F6]">
+                <i class="fa-solid fa-square-parking text-[20px]"></i></div>
+              <div>
+                <h3 class="text-[16px] font-bold text-brand-navy">Paragon Park,
+                  P1</h3>
+                <p class="text-[13px] text-gray-500">Stockholm Central</p>
+              </div>
+            </div><span
+              class="px-3 py-1 bg-brand-success/10 text-brand-success text-[12px] font-bold rounded-full">Active</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="bg-gray-50 rounded-[12px] p-3"><span
+                class="text-[11px] text-gray-400 font-medium uppercase tracking-wider block mb-1">Vehicle</span><span
+                class="text-[13px] font-semibold text-brand-navy">BMW M4 (ABC
+                123)</span></div>
+            <div class="bg-gray-50 rounded-[12px] p-3"><span
+                class="text-[11px] text-gray-400 font-medium uppercase tracking-wider block mb-1">Time
+                Left</span><span
+                class="text-[13px] font-semibold text-brand-navy">00:45
+                mins</span></div>
+          </div>
+          <div
+            class="flex items-center justify-between pt-3 border-t border-gray-100">
+            <span class="text-[14px] font-bold text-brand-navy">35
+              kr</span><span
+              class="text-[13px] font-medium text-brand-navy hover:underline">View
+              Details <i
+                class="fa-solid fa-chevron-right ml-1 text-[10px]"></i></span>
+          </div>
+        </div><!-- Completed Booking Card -->
+        <div
+          class="bg-white rounded-[20px] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100">
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-12 h-12 rounded-[12px] bg-gray-50 flex items-center justify-center text-gray-400">
+                <i class="fa-solid fa-square-parking text-[20px]"></i></div>
+              <div>
+                <h3 class="text-[16px] font-bold text-brand-navy">Kista Galleria
+                </h3>
+                <p class="text-[13px] text-gray-500">12 Oct 2023</p>
+              </div>
+            </div><span
+              class="px-3 py-1 bg-gray-100 text-gray-600 text-[12px] font-bold rounded-full">Completed</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="bg-gray-50 rounded-[12px] p-3"><span
+                class="text-[11px] text-gray-400 font-medium uppercase tracking-wider block mb-1">Duration</span><span
+                class="text-[13px] font-semibold text-brand-navy">2.5
+                Hours</span></div>
+            <div class="bg-gray-50 rounded-[12px] p-3"><span
+                class="text-[11px] text-gray-400 font-medium uppercase tracking-wider block mb-1">Paid</span><span
+                class="text-[13px] font-semibold text-brand-navy">85 kr</span>
+            </div>
+          </div>
+        </div><!-- Cancelled Booking Card -->
+        <div
+          class="bg-white rounded-[20px] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100">
+          <div class="flex justify-between items-start mb-4">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-12 h-12 rounded-[12px] bg-gray-50 flex items-center justify-center text-gray-400">
+                <i class="fa-solid fa-square-parking text-[20px]"></i></div>
+              <div>
+                <h3 class="text-[16px] font-bold text-brand-navy">Odenplan P-hus
+                </h3>
+                <p class="text-[13px] text-gray-500">05 Oct 2023</p>
+              </div>
+            </div><span
+              class="px-3 py-1 bg-brand-danger/10 text-brand-danger text-[12px] font-bold rounded-full">Cancelled</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="bg-gray-50 rounded-[12px] p-3"><span
+                class="text-[11px] text-gray-400 font-medium uppercase tracking-wider block mb-1">Duration</span><span
+                class="text-[13px] font-semibold text-brand-navy">--</span>
+            </div>
+            <div class="bg-gray-50 rounded-[12px] p-3"><span
+                class="text-[11px] text-gray-400 font-medium uppercase tracking-wider block mb-1">Refunded</span><span
+                class="text-[13px] font-semibold text-brand-navy">40 kr</span>
+            </div>
+          </div>
+        </div><!-- Empty State (Hidden by default, shown for demonstration) -->
+        <!-- 
+            <div class="flex flex-col items-center justify-center h-full mt-10">
+                <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6 text-gray-300">
+                    <i class="fa-solid fa-ticket text-[40px]"></i>
+                </div>
+                <h3 class="text-[18px] font-bold text-brand-navy mb-2">No past bookings</h3>
+                <p class="text-[14px] text-gray-500 text-center mb-8 max-w-[250px]">You haven't made any parking reservations yet.</p>
+                <button class="px-6 py-3 bg-brand-navy text-white rounded-[12px] font-semibold text-[14px] shadow-lg">
+                    Back to Map
+                </button>
+            </div>
+            -->
+      </div><!-- Booking Detail Drawer -->
+      <div id="booking-drawer"
+        class="absolute bottom-0 left-0 w-full h-[85%] bg-white rounded-t-[32px] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] z-[60] flex flex-col">
+        <!-- Drag Handle -->
+        <div
+          onclick="document.getElementById('booking-drawer').classList.remove('open')"
+          class="w-full flex justify-center pt-4 pb-2">
+          <div class="w-12 h-1.5 bg-gray-200 rounded-full cursor-pointer"></div>
+        </div>
+        <div class="flex-1 overflow-y-auto px-6 pb-8 hide-scrollbar">
+          <div class="flex justify-between items-center mb-6 mt-2">
+            <h2 class="text-[20px] font-bold text-brand-navy">Booking Details
+            </h2><span
+              class="px-3 py-1 bg-brand-success/10 text-brand-success text-[12px] font-bold rounded-full">Active</span>
+          </div><!-- QR Code Block -->
+          <div
+            class="bg-gray-50 rounded-[24px] p-6 flex flex-col items-center justify-center mb-6 border border-gray-100">
+            <div class="bg-white p-3 rounded-[16px] shadow-sm mb-3"><img
+                src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e9943fac0f-bd060e9539ba2e90f1c2.png"
+                alt="QR code" class="w-[120px] h-[120px] object-cover"></div>
+            <p
+              class="text-[12px] text-gray-400 font-medium tracking-widest uppercase">
+              ID: PW-8472-X</p>
+          </div><!-- Info List -->
+          <div
+            class="bg-white rounded-[20px] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 mb-6">
+            <div class="flex flex-col gap-4">
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500">
+                    <i class="fa-solid fa-location-dot text-[14px]"></i></div>
+                  <span
+                    class="text-[14px] font-medium text-gray-600">Location</span>
+                </div><span
+                  class="text-[14px] font-semibold text-brand-navy">Paragon
+                  Park, P1</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500">
+                    <i class="fa-solid fa-car text-[14px]"></i></div><span
+                    class="text-[14px] font-medium text-gray-600">Vehicle</span>
+                </div><span
+                  class="text-[14px] font-semibold text-brand-navy">BMW
+                  M4</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500">
+                    <i class="fa-regular fa-clock text-[14px]"></i></div><span
+                    class="text-[14px] font-medium text-gray-600">Time</span>
+                </div><span
+                  class="text-[14px] font-semibold text-brand-navy">12:15 -
+                  13:15</span>
+              </div>
+            </div>
+          </div><!-- Action Grid -->
+          <div class="grid grid-cols-2 gap-3 mb-6"><button
+              class="bg-white rounded-[16px] p-4 border border-gray-100 shadow-sm flex flex-col items-center justify-center gap-2 hover:bg-gray-50 transition-colors">
+              <div
+                class="w-10 h-10 rounded-full bg-[#EBF5FF] flex items-center justify-center text-[#3B82F6]">
+                <i class="fa-solid fa-plus text-[16px]"></i></div><span
+                class="text-[13px] font-semibold text-brand-navy">Extend</span>
+            </button><button
+              class="bg-white rounded-[16px] p-4 border border-gray-100 shadow-sm flex flex-col items-center justify-center gap-2 hover:bg-gray-50 transition-colors">
+              <div
+                class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600">
+                <i class="fa-solid fa-location-arrow text-[16px]"></i></div>
+              <span
+                class="text-[13px] font-semibold text-brand-navy">Directions</span>
+            </button><button
+              class="bg-white rounded-[16px] p-4 border border-gray-100 shadow-sm flex flex-col items-center justify-center gap-2 hover:bg-gray-50 transition-colors">
+              <div
+                class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600">
+                <i class="fa-solid fa-receipt text-[16px]"></i></div><span
+                class="text-[13px] font-semibold text-brand-navy">Receipt</span>
+            </button><button
+              class="bg-white rounded-[16px] p-4 border border-gray-100 shadow-sm flex flex-col items-center justify-center gap-2 hover:bg-gray-50 transition-colors">
+              <div
+                class="w-10 h-10 rounded-full bg-brand-danger/10 flex items-center justify-center text-brand-danger">
+                <i class="fa-solid fa-triangle-exclamation text-[16px]"></i>
+              </div><span
+                class="text-[13px] font-semibold text-brand-danger">Report</span>
+            </button></div><button
+            onclick="document.getElementById('booking-drawer').classList.remove('open')"
+            class="w-full py-4 rounded-[16px] border border-brand-danger/20 text-brand-danger font-semibold text-[15px] flex justify-center items-center gap-2 hover:bg-red-50 transition-colors">
+            Close Details
+          </button>
+        </div>
+      </div><!-- Drawer Overlay -->
+      <div id="drawer-overlay"
+        onclick="document.getElementById('booking-drawer').classList.remove('open')"
+        class="absolute inset-0 bg-brand-navy/40 z-[55] hidden"></div>
+      <!-- Script for Drawer Toggle Logic (Basic) -->
+      <script>
+        // Simple logic to show/hide overlay when drawer opens/closes
+        const drawer = document.getElementById('booking-drawer');
+        const overlay = document.getElementById('drawer-overlay');
+
+        const observer = new MutationObserver((mutations) =>
+        {
+          mutations.forEach((mutation) =>
+          {
+            if (mutation.attributeName === 'class')
+            {
+              if (drawer.classList.contains('open'))
+              {
+                overlay.classList.remove('hidden');
+              }
+              else
+              {
+                overlay.classList.add('hidden');
+              }
+            }
+          });
+        });
+
+        observer.observe(drawer,
+        {
+          attributes: true
+        });
+      </script><!-- BOTTOM UI: Navigation (Preserved from context) -->
+      <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col">
+        <!-- Bottom Navigation Bar -->
+        <div
+          class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50">
+          <!-- Home Map --><button
+            class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+            <div class="w-12 h-8 flex items-center justify-center"><i
+                class="fa-solid fa-map text-[18px]"></i></div><span
+              class="text-[10px] font-medium">Map</span>
+          </button><!-- Search/Filters --><button
+            class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+            <div class="w-12 h-8 flex items-center justify-center"><i
+                class="fa-solid fa-magnifying-glass text-[18px]"></i></div><span
+              class="text-[10px] font-medium">Search</span>
+          </button><!-- Bookings History (Active) --><button
+            class="flex flex-col items-center gap-1 text-brand-navy">
+            <div
+              class="w-12 h-8 bg-gray-100 rounded-full flex items-center justify-center relative">
+              <i class="fa-solid fa-clock-rotate-left text-[18px]"></i></div>
+            <span class="text-[10px] font-bold">Activity</span>
+          </button><!-- Profile --><button
+            class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+            <div class="w-12 h-8 flex items-center justify-center"><i
+                class="fa-regular fa-user text-[18px]"></i></div><span
+              class="text-[10px] font-medium">Profile</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+<script defer src="/prototype-bridge.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Issue Reporting (Category)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100',
+                            swishBlue: '#005596',
+                            blue: '#444CE7',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .category-selected {
+            border-color: #14223A;
+            background-color: rgba(20, 34, 58, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="issue-report-category">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-[#F9FAFB] text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header -->
+        <div id="header" class="pt-12 pb-4 px-5 bg-white shadow-[0_2px_12px_rgba(20,34,58,0.04)] relative z-30 border-b border-brand-navy/5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button class="w-8 h-8 flex items-center justify-center rounded-full bg-brand-navy/5 text-brand-navy hover:bg-brand-navy/10 transition-colors">
+                    <i class="fa-solid fa-arrow-left text-[14px]"></i>
+                </button>
+                <h1 class="text-[20px] font-bold text-brand-navy">Report Issue</h1>
+            </div>
+        </div>
+
+        <!-- Scrollable Content Area -->
+        <div id="main-content" class="flex-1 overflow-y-auto hide-scrollbar pb-[120px] bg-[#F9FAFB]">
+            
+            <div class="px-5 py-6">
+                
+                <h2 class="text-[18px] font-bold text-brand-navy mb-2">What's the problem?</h2>
+                <p class="text-[14px] text-brand-navy/60 mb-6">Select a category that best describes the issue you found.</p>
+
+                <!-- Category Grid -->
+                <div id="category-grid" class="grid grid-cols-2 gap-3 mb-8">
+                    
+                    <!-- Category: Wrong Price -->
+                    <button class="bg-white rounded-[16px] p-4 border border-brand-navy/10 text-left hover:bg-brand-navy/5 transition-colors flex flex-col gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-navy/20" onclick="selectCategory(this)">
+                        <div class="w-10 h-10 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy/10 transition-colors">
+                            <i class="fa-solid fa-tag text-[16px]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[14px] font-bold text-brand-navy">Wrong Price</h3>
+                        </div>
+                    </button>
+
+                    <!-- Category: Closed Lot -->
+                    <button class="bg-white rounded-[16px] p-4 border border-brand-navy/10 text-left hover:bg-brand-navy/5 transition-colors flex flex-col gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-navy/20" onclick="selectCategory(this)">
+                        <div class="w-10 h-10 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy/10 transition-colors">
+                            <i class="fa-solid fa-ban text-[16px]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[14px] font-bold text-brand-navy">Closed Lot</h3>
+                        </div>
+                    </button>
+
+                    <!-- Category: Broken EV Charger -->
+                    <button class="bg-white rounded-[16px] p-4 border border-brand-navy/10 text-left hover:bg-brand-navy/5 transition-colors flex flex-col gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-navy/20" onclick="selectCategory(this)">
+                        <div class="w-10 h-10 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy/10 transition-colors">
+                            <i class="fa-solid fa-plug-circle-xmark text-[16px]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[14px] font-bold text-brand-navy">Broken EV Charger</h3>
+                        </div>
+                    </button>
+
+                    <!-- Category: Incorrect Street Cleaning -->
+                    <button class="bg-white rounded-[16px] p-4 border border-brand-navy/10 text-left hover:bg-brand-navy/5 transition-colors flex flex-col gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-navy/20" onclick="selectCategory(this)">
+                        <div class="w-10 h-10 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy/10 transition-colors">
+                            <i class="fa-solid fa-broom text-[16px]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[14px] font-bold text-brand-navy">Incorrect Cleaning</h3>
+                        </div>
+                    </button>
+
+                    <!-- Category: Marker Misplaced -->
+                    <button class="bg-white rounded-[16px] p-4 border border-brand-navy/10 text-left hover:bg-brand-navy/5 transition-colors flex flex-col gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-navy/20" onclick="selectCategory(this)">
+                        <div class="w-10 h-10 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy/10 transition-colors">
+                            <i class="fa-solid fa-map-pin text-[16px]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[14px] font-bold text-brand-navy">Marker Misplaced</h3>
+                        </div>
+                    </button>
+
+                    <!-- Category: Other -->
+                    <button class="bg-white rounded-[16px] p-4 border border-brand-navy/10 text-left hover:bg-brand-navy/5 transition-colors flex flex-col gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-navy/20" onclick="selectCategory(this)">
+                        <div class="w-10 h-10 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy/10 transition-colors">
+                            <i class="fa-solid fa-circle-question text-[16px]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[14px] font-bold text-brand-navy">Other Issue</h3>
+                        </div>
+                    </button>
+
+                </div>
+
+                <!-- Location Auto-Fill Toggle -->
+                <div id="location-toggle" class="bg-white rounded-[16px] p-4 border border-brand-navy/10 flex items-center justify-between mb-4 shadow-[0_2px_12px_rgba(20,34,58,0.02)]">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy">
+                            <i class="fa-solid fa-location-crosshairs text-[14px]"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-[14px] font-bold text-brand-navy">Auto-fill location</h4>
+                            <p class="text-[12px] text-brand-navy/60">Attach current coordinates</p>
+                        </div>
+                    </div>
+                    <!-- Toggle Switch Active -->
+                    <div class="w-11 h-6 bg-brand-success rounded-full relative cursor-pointer shadow-inner" onclick="toggleSwitch(this)">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5 shadow-sm transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Photo Upload -->
+                <div id="photo-upload" class="bg-white rounded-[16px] p-5 border border-brand-navy/10 border-dashed flex flex-col items-center justify-center gap-3 cursor-pointer hover:bg-brand-navy/5 transition-colors">
+                    <div class="w-12 h-12 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy">
+                        <i class="fa-solid fa-camera text-[20px]"></i>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="text-[14px] font-bold text-brand-navy">Upload Photo <span class="text-brand-navy/40 font-normal">(Optional)</span></h4>
+                        <p class="text-[12px] text-brand-navy/60 mt-1">Tap to take a photo or choose from gallery</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Sticky Bottom CTA -->
+        <div id="sticky-cta" class="absolute bottom-[90px] left-0 w-full px-5 py-4 bg-gradient-to-t from-[#F9FAFB] via-[#F9FAFB] to-transparent z-40 pointer-events-none">
+            <button class="w-full py-4 rounded-[16px] bg-brand-navy text-[15px] font-bold text-white shadow-[0_4px_16px_rgba(20,34,58,0.25)] hover:bg-brand-navy/90 transition-all pointer-events-auto flex items-center justify-center gap-2 opacity-50 cursor-not-allowed" id="next-btn">
+                Next Step <i class="fa-solid fa-arrow-right text-[14px]"></i>
+            </button>
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved exactly from context, Profile Active) -->
+        <div id="footer" class="absolute bottom-0 left-0 w-full z-50 flex flex-col pointer-events-none">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5 pointer-events-auto">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Side Menu (Profile Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-bars text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Menu</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function selectCategory(element) {
+            // Remove active state from all categories
+            const categories = document.querySelectorAll('#category-grid button');
+            categories.forEach(cat => {
+                cat.classList.remove('category-selected', 'border-brand-navy/30', 'shadow-sm');
+                cat.classList.add('border-brand-navy/10');
+                
+                // Reset icon background
+                const iconBg = cat.querySelector('div');
+                iconBg.classList.remove('bg-brand-navy', 'text-white');
+                iconBg.classList.add('bg-brand-navy/5', 'text-brand-navy');
+            });
+
+            // Add active state to selected category
+            element.classList.remove('border-brand-navy/10');
+            element.classList.add('category-selected', 'border-brand-navy/30', 'shadow-sm');
+            
+            // Highlight icon
+            const selectedIconBg = element.querySelector('div');
+            selectedIconBg.classList.remove('bg-brand-navy/5', 'text-brand-navy');
+            selectedIconBg.classList.add('bg-brand-navy', 'text-white');
+
+            // Enable Next button
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        function toggleSwitch(element) {
+            const isAcitve = element.classList.contains('bg-brand-success');
+            const knob = element.querySelector('div');
+            
+            if (isAcitve) {
+                element.classList.remove('bg-brand-success');
+                element.classList.add('bg-brand-navy/20');
+                knob.classList.remove('right-0.5');
+                knob.classList.add('left-0.5');
+            } else {
+                element.classList.remove('bg-brand-navy/20');
+                element.classList.add('bg-brand-success');
+                knob.classList.remove('left-0.5');
+                knob.classList.add('right-0.5');
+            }
+        }
+    </script>
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

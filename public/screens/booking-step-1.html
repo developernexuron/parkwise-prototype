@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Booking Step 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93'
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Map background pattern */
+        .map-bg {
+            background-color: #f0f3f5;
+            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* Bottom Sheet Animation */
+        .sheet-enter {
+            transform: translateY(100%);
+        }
+        .sheet-enter-active {
+            transform: translateY(0);
+            transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="booking-step-1">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header / Progress Bar -->
+        <div class="px-6 pt-12 pb-4 bg-white z-30 sticky top-0 border-b border-gray-100 flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+                <button class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-brand-navy hover:bg-gray-100 transition-colors">
+                    <i class="fa-solid fa-arrow-left text-[16px]"></i>
+                </button>
+                <div class="flex flex-col items-center">
+                    <span class="text-[12px] font-medium text-gray-500 uppercase tracking-wide">Step 1 of 3</span>
+                    <h1 class="text-[16px] font-bold text-brand-navy">Booking Setup</h1>
+                </div>
+                <div class="w-10 h-10"></div> <!-- Spacer for balance -->
+            </div>
+            
+            <!-- Progress Indicator -->
+            <div class="w-full flex gap-2">
+                <div class="h-1.5 flex-1 bg-brand-navy rounded-full"></div>
+                <div class="h-1.5 flex-1 bg-gray-200 rounded-full"></div>
+                <div class="h-1.5 flex-1 bg-gray-200 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- Main Scrollable Content -->
+        <div class="flex-1 overflow-y-auto hide-scrollbar px-6 pb-32 bg-[#F9FAFB]">
+            
+            <!-- Location Summary -->
+            <div class="mt-6 mb-6">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 rounded-full bg-brand-navy/10 flex items-center justify-center text-brand-navy">
+                        <i class="fa-solid fa-location-dot text-[16px]"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-[18px] font-bold text-brand-navy leading-tight">Kungsgatan 12</h2>
+                        <p class="text-[13px] text-gray-500">Norrmalm, Stockholm</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time Picker Section -->
+            <div class="bg-white rounded-[24px] p-5 shadow-sm border border-gray-100 mb-6">
+                <h3 class="text-[15px] font-bold text-brand-navy mb-4">Duration</h3>
+                
+                <!-- Quick Presets -->
+                <div class="grid grid-cols-4 gap-2 mb-5">
+                    <button class="py-2.5 rounded-xl border border-gray-200 text-[13px] font-medium text-gray-600 hover:bg-gray-50 transition-colors">30m</button>
+                    <button class="py-2.5 rounded-xl border-2 border-brand-navy bg-brand-navy/5 text-[13px] font-bold text-brand-navy">1h</button>
+                    <button class="py-2.5 rounded-xl border border-gray-200 text-[13px] font-medium text-gray-600 hover:bg-gray-50 transition-colors">2h</button>
+                    <button class="py-2.5 rounded-xl border border-gray-200 text-[13px] font-medium text-gray-600 hover:bg-gray-50 transition-colors">4h</button>
+                </div>
+
+                <!-- Custom Time Timeline -->
+                <div class="flex flex-col gap-4 relative">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-[23px] top-6 bottom-6 w-0.5 bg-gray-100 z-0"></div>
+                    
+                    <!-- Start Time -->
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="w-12 h-12 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 shrink-0">
+                            <i class="fa-regular fa-clock text-[16px]"></i>
+                        </div>
+                        <div class="flex-1 bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 flex justify-between items-center">
+                            <div class="flex flex-col">
+                                <span class="text-[11px] text-gray-500 font-medium mb-0.5">Start Time</span>
+                                <span class="text-[15px] font-bold text-brand-navy">14:00</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-[12px] text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- End Time -->
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="w-12 h-12 rounded-full bg-brand-navy/10 border border-brand-navy/20 flex items-center justify-center text-brand-navy shrink-0">
+                            <i class="fa-solid fa-flag-checkered text-[16px]"></i>
+                        </div>
+                        <div class="flex-1 bg-white rounded-xl px-4 py-3 border-2 border-brand-navy flex justify-between items-center shadow-sm">
+                            <div class="flex flex-col">
+                                <span class="text-[11px] text-brand-navy font-bold mb-0.5">End Time</span>
+                                <span class="text-[15px] font-bold text-brand-navy">15:00</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-[12px] text-brand-navy"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicle Selector -->
+            <div class="bg-white rounded-[24px] p-5 shadow-sm border border-gray-100 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-[15px] font-bold text-brand-navy">Vehicle</h3>
+                    <button class="text-[13px] font-semibold text-[#444CE7]">Change</button>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-lg border border-gray-200 flex items-center justify-center shadow-sm">
+                            <i class="fa-solid fa-car-side text-[16px] text-gray-600"></i>
+                        </div>
+                        <div>
+                            <span class="text-[15px] font-bold text-brand-navy block">Volvo XC60</span>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="bg-white border border-gray-300 px-2 py-0.5 rounded text-[11px] font-mono font-bold text-gray-800">ABC 123</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#28A745]"></span>
+                                <span class="text-[11px] text-gray-500">EV Profile</span>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-[20px] text-[#28A745]"></i>
+                </div>
+            </div>
+
+            <!-- Rule Warning (Active State) -->
+            <div class="bg-brand-gold/10 rounded-[20px] p-4 border border-brand-gold/20 flex items-start gap-3 mb-6">
+                <div class="w-8 h-8 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold shrink-0 mt-0.5">
+                    <i class="fa-solid fa-triangle-exclamation text-[14px]"></i>
+                </div>
+                <div>
+                    <h4 class="text-[13px] font-bold text-brand-navy mb-1">Max stay is 2 hours</h4>
+                    <p class="text-[12px] text-gray-600 leading-relaxed">This zone has a 2-hour maximum limit. Your booking will automatically end at 16:00 to avoid fines.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Action Bar (Sticky) -->
+        <div class="absolute bottom-[72px] left-0 w-full bg-white border-t border-gray-100 px-6 py-4 z-40 shadow-[0_-8px_30px_rgba(0,0,0,0.08)]">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <span class="text-[12px] font-medium text-gray-500 block mb-0.5">Estimated Cost</span>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-[24px] font-bold text-brand-navy">45</span>
+                        <span class="text-[14px] font-medium text-gray-500">kr</span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="text-[12px] font-medium text-gray-500 block mb-0.5">Duration</span>
+                    <span class="text-[15px] font-bold text-brand-navy">1 hr 0 min</span>
+                </div>
+            </div>
+            
+            <button class="w-full h-14 bg-brand-navy text-white rounded-full font-semibold text-[16px] shadow-[0_8px_20px_rgba(20,34,58,0.2)] flex items-center justify-center gap-2 hover:bg-[#1E3354] transition-colors">
+                Continue to Payment
+                <i class="fa-solid fa-arrow-right text-[14px]"></i>
+            </button>
+        </div>
+
+        <!-- BOTTOM UI: Navigation -->
+        <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50">
+                
+                <!-- Home Map (Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy">
+                    <div class="w-12 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Activity</span>
+                </button>
+
+                <!-- Profile -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-regular fa-user text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Profile</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

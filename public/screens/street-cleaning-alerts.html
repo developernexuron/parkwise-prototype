@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Street Cleaning Alert Setup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100', // Swish yellow
+                            swishBlue: '#005596', // Swish blue
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Custom toggle switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #14223A;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #14223A;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="street-cleaning-alerts">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header -->
+        <div class="px-6 pt-12 pb-4 z-30 w-full flex flex-col gap-4 bg-white sticky top-0 border-b border-brand-navy/5">
+            <div class="flex items-center justify-between">
+                <button class="w-10 h-10 flex items-center justify-start text-brand-navy hover:opacity-70 transition-opacity">
+                    <i class="fa-solid fa-arrow-left text-[20px]"></i>
+                </button>
+                <div class="flex items-center gap-3">
+                    <button class="w-10 h-10 flex items-center justify-center text-brand-navy hover:bg-brand-navy/5 rounded-full transition-colors text-[14px] font-bold">
+                        Save
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-2 flex items-end justify-between">
+                <div>
+                    <h1 class="text-[28px] font-bold tracking-tight text-brand-navy leading-tight mb-1">Alert Setup</h1>
+                    <p class="text-[14px] text-brand-navy/60 font-medium">Street cleaning reminders</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto hide-scrollbar pb-[120px] bg-[#F9FAFB]">
+            
+            <!-- Watched Streets Section -->
+            <div id="watched-streets-config" class="px-6 py-6 bg-white border-b border-brand-navy/5">
+                <div class="mb-4">
+                    <h2 class="text-[16px] font-bold text-brand-navy">Watched Streets</h2>
+                    <p class="text-[13px] text-brand-navy/60 mt-1">Get notified before cleaning starts.</p>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <!-- Chip 1 -->
+                    <div class="flex items-center gap-2 bg-brand-navy/5 px-3 py-1.5 rounded-full border border-brand-navy/10">
+                        <span class="text-[13px] font-medium text-brand-navy">Sveavägen</span>
+                        <button class="w-4 h-4 rounded-full bg-brand-navy/10 flex items-center justify-center text-brand-navy/60 hover:bg-brand-navy/20 hover:text-brand-navy transition-colors">
+                            <i class="fa-solid fa-xmark text-[10px]"></i>
+                        </button>
+                    </div>
+                    <!-- Chip 2 -->
+                    <div class="flex items-center gap-2 bg-brand-navy/5 px-3 py-1.5 rounded-full border border-brand-navy/10">
+                        <span class="text-[13px] font-medium text-brand-navy">Odengatan</span>
+                        <button class="w-4 h-4 rounded-full bg-brand-navy/10 flex items-center justify-center text-brand-navy/60 hover:bg-brand-navy/20 hover:text-brand-navy transition-colors">
+                            <i class="fa-solid fa-xmark text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add Street Button -->
+                <button class="w-full h-[48px] bg-white border border-brand-navy/20 rounded-[12px] flex items-center justify-start px-4 gap-3 text-brand-navy/60 hover:bg-brand-navy/5 transition-colors">
+                    <i class="fa-solid fa-magnifying-glass text-[14px]"></i>
+                    <span class="text-[14px] font-medium">Add street to watch...</span>
+                </button>
+            </div>
+
+            <!-- Permission Denied Banner (Hidden by default, shown for demo) -->
+            <div class="px-6 py-4 bg-brand-danger/10 border-b border-brand-danger/20 flex items-start gap-3">
+                <i class="fa-solid fa-triangle-exclamation text-brand-danger mt-0.5"></i>
+                <div class="flex-1">
+                    <h3 class="text-[14px] font-bold text-brand-danger mb-1">Notifications Disabled</h3>
+                    <p class="text-[13px] text-brand-navy/70 mb-2">You won't receive alerts until you enable notifications in your device settings.</p>
+                    <button class="text-[13px] font-bold text-brand-navy underline underline-offset-2">Open System Settings</button>
+                </div>
+            </div>
+
+            <!-- Alert Lead Time Section -->
+            <div id="alert-timing-settings" class="px-6 py-6 bg-white border-b border-brand-navy/5">
+                <div class="mb-4">
+                    <h2 class="text-[16px] font-bold text-brand-navy">Alert Lead Time</h2>
+                    <p class="text-[13px] text-brand-navy/60 mt-1">When should we remind you?</p>
+                </div>
+
+                <!-- Segment Control -->
+                <div class="bg-brand-navy/5 p-1 rounded-[12px] flex items-center relative w-full">
+                    <div class="absolute left-1 top-1 bottom-1 w-[32.5%] bg-white rounded-[8px] shadow-[0_2px_8px_rgba(20,34,58,0.08)] transition-all duration-300"></div>
+                    
+                    <button class="flex-1 py-2 text-[14px] font-bold text-brand-navy relative z-10">
+                        24h
+                    </button>
+                    <button class="flex-1 py-2 text-[14px] font-medium text-brand-navy/60 hover:text-brand-navy transition-colors relative z-10">
+                        12h
+                    </button>
+                    <button class="flex-1 py-2 text-[14px] font-medium text-brand-navy/60 hover:text-brand-navy transition-colors relative z-10">
+                        2h
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiet Hours Section -->
+            <div id="quiet-hours-toggle" class="px-6 py-6 bg-white border-b border-brand-navy/5">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="text-[16px] font-bold text-brand-navy">Quiet Hours</h2>
+                        <p class="text-[13px] text-brand-navy/60 mt-1">Mute alerts during sleep.</p>
+                    </div>
+                    
+                    <!-- Toggle Switch -->
+                    <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                        <input type="checkbox" name="toggle" id="quiet-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-brand-navy/20 appearance-none cursor-pointer checked:border-brand-navy" checked/>
+                        <label for="quiet-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-brand-navy/20 cursor-pointer checked:bg-brand-navy"></label>
+                    </div>
+                </div>
+
+                <!-- Time Range Picker (Active State) -->
+                <div class="flex items-center gap-3">
+                    <div class="flex-1 h-[48px] bg-white border border-brand-navy/20 rounded-[12px] flex items-center justify-between px-4">
+                        <span class="text-[14px] font-medium text-brand-navy/60">From</span>
+                        <span class="text-[15px] font-bold text-brand-navy">22:00</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-brand-navy/40 text-[12px]"></i>
+                    <div class="flex-1 h-[48px] bg-white border border-brand-navy/20 rounded-[12px] flex items-center justify-between px-4">
+                        <span class="text-[14px] font-medium text-brand-navy/60">To</span>
+                        <span class="text-[15px] font-bold text-brand-navy">07:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Channels Section -->
+            <div id="notification-channels-test" class="px-6 py-6 bg-white">
+                <div class="mb-4">
+                    <h2 class="text-[16px] font-bold text-brand-navy">Channels</h2>
+                    <p class="text-[13px] text-brand-navy/60 mt-1">How do you want to receive alerts?</p>
+                </div>
+
+                <div class="flex flex-col gap-3 mb-6">
+                    <!-- Push Toggle -->
+                    <div class="flex items-center justify-between p-4 border border-brand-navy/10 rounded-[16px] bg-brand-navy/5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center text-brand-navy shadow-[0_2px_8px_rgba(20,34,58,0.05)]">
+                                <i class="fa-solid fa-bell text-[14px]"></i>
+                            </div>
+                            <span class="text-[15px] font-bold text-brand-navy">Push Notification</span>
+                        </div>
+                        <div class="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="push-toggle" id="push-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-brand-navy/20 appearance-none cursor-pointer checked:border-brand-navy" checked/>
+                            <label for="push-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-brand-navy/20 cursor-pointer checked:bg-brand-navy"></label>
+                        </div>
+                    </div>
+
+                    <!-- Email Toggle -->
+                    <div class="flex items-center justify-between p-4 border border-brand-navy/10 rounded-[16px]">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-brand-navy/5 rounded-full flex items-center justify-center text-brand-navy/60">
+                                <i class="fa-solid fa-envelope text-[14px]"></i>
+                            </div>
+                            <span class="text-[15px] font-medium text-brand-navy">Email</span>
+                        </div>
+                        <div class="relative inline-block w-12 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="email-toggle" id="email-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-brand-navy/20 appearance-none cursor-pointer"/>
+                            <label for="email-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-brand-navy/20 cursor-pointer"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Notification Button -->
+                <button class="w-full h-[52px] border-2 border-brand-navy text-brand-navy rounded-[16px] font-bold text-[15px] hover:bg-brand-navy/5 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-regular fa-paper-plane"></i> Send Test Notification
+                </button>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved from context) -->
+        <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Side Menu (Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-bars text-[18px]"></i>
+                        <div class="absolute top-1 right-2 w-2 h-2 bg-brand-danger rounded-full border border-white"></div>
+                    </div>
+                    <span class="text-[10px] font-bold">Menu</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

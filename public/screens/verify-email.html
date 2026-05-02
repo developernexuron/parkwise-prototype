@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Email Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        /* Success banner slide down */
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .animate-slide-down {
+            animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* OTP Input styling overrides to match reference */
+        .otp-input {
+            width: 3rem; /* ~48px */
+            height: 3.5rem; /* ~56px */
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #14223A;
+            background-color: #FFFFFF;
+            transition: all 0.2s ease;
+        }
+        .otp-input:focus {
+            outline: none;
+            border-color: #14223A;
+            box-shadow: 0 0 0 2px rgba(20, 34, 58, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="verify-email">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 pb-10 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Success Banner State (Hidden by default, shown via JS simulation for demo) -->
+        <div id="success-banner" class="absolute top-0 left-0 right-0 bg-brand-success text-white px-4 py-3 z-50 flex items-center gap-3 shadow-md animate-slide-down hidden">
+            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-check text-white text-xs"></i>
+            </div>
+            <p class="text-[14px] font-medium leading-tight">Email successfully verified! You can now continue.</p>
+        </div>
+
+        <!-- Image Header Area (matching reference structure) -->
+        <div class="h-[200px] w-full relative bg-brand-navy/5 shrink-0 overflow-hidden rounded-b-[24px] mb-6">
+            <!-- Simulated background image from reference -->
+            <div class="absolute inset-0 bg-brand-navy/10">
+                <img class="w-full h-full object-cover opacity-80" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/99a392a271-2f7d390d3e617c6c1601.png" alt="Stockholm city skyline subtle background with calm tones" />
+            </div>
+            
+            <!-- Header (Back) overlaid on image -->
+            <div id="auth-header" class="absolute top-0 left-0 right-0 flex justify-between items-center w-full pt-10 px-6 z-20">
+                <!-- Back Button -->
+                <button class="text-sm font-semibold text-white hover:text-brand-gold transition-colors py-1 flex items-center gap-2 drop-shadow-md">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Area (White Card Style from Reference) -->
+        <div class="flex-1 flex flex-col px-6 z-10 animate-fade-in relative overflow-y-auto" style="scrollbar-width: none;">
+            
+            <!-- Illustration / Icon -->
+            <div class="mb-8 flex justify-center">
+                <img class="w-48 h-auto object-contain" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/7b3bfe91b4-03a04b98d8431f3e107a.png" alt="Minimalist flat vector illustration of a person interacting with an email or verification shield, navy and gold colors, clean white background" />
+            </div>
+
+            <!-- Typography & Copy -->
+            <div class="text-center mb-6">
+                <h1 class="text-[24px] leading-[1.2] font-bold text-brand-navy mb-3 tracking-tight">
+                    OTP Verification
+                </h1>
+                <p class="text-[14px] text-gray-500 font-medium leading-relaxed max-w-[280px] mx-auto">
+                    An 6 Digit Verification Code has been sent to <span class="font-bold text-brand-navy">lars.johansson@example.com</span>
+                </p>
+            </div>
+
+            <!-- OTP Input Group -->
+            <div class="flex justify-center gap-2 mb-10 px-2">
+                <input type="text" maxlength="1" class="otp-input" value="5" />
+                <input type="text" maxlength="1" class="otp-input" value="8" />
+                <input type="text" maxlength="1" class="otp-input" value="1" />
+                <input type="text" maxlength="1" class="otp-input" value="9" />
+                <input type="text" maxlength="1" class="otp-input" value="5" />
+                <input type="text" maxlength="1" class="otp-input" value="7" />
+            </div>
+            
+            <!-- Spacer to push buttons to bottom -->
+            <div class="flex-grow"></div>
+            
+            <!-- Action Stack -->
+            <div id="auth-actions" class="flex flex-col gap-5 mt-auto shrink-0 w-full">
+                <!-- Primary CTA -->
+                <button id="verify-btn" class="w-full bg-brand-navy hover:bg-[#1a2d4c] text-white font-bold py-4 px-6 rounded-[8px] transition-colors shadow-sm flex items-center justify-center gap-2 text-[15px]">
+                    Verify
+                </button>
+                
+                <!-- Resend & Change Links -->
+                <div class="flex flex-col items-center gap-3 pb-2">
+                    <p class="text-center text-[14px] text-gray-500 font-medium">
+                        Don't get OTP Code? 
+                        <button class="font-bold text-brand-navy hover:text-brand-gold transition-colors ml-1">Resend</button>
+                    </p>
+                    <button class="text-[13px] font-semibold text-gray-400 hover:text-brand-navy transition-colors underline decoration-gray-300 underline-offset-2">
+                        Change email address
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple interaction simulation
+        document.addEventListener('DOMContentLoaded', () => {
+            const verifyBtn = document.getElementById('verify-btn');
+            const successBanner = document.getElementById('success-banner');
+            
+            // Auto-focus logic for OTP inputs
+            const otpInputs = document.querySelectorAll('.otp-input');
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1 && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                });
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && !this.value && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                });
+            });
+
+            // Simulate verification success
+            verifyBtn.addEventListener('click', () => {
+                // Change button state
+                verifyBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+                verifyBtn.classList.add('opacity-80', 'cursor-not-allowed');
+                
+                setTimeout(() => {
+                    // Show success banner
+                    successBanner.classList.remove('hidden');
+                    
+                    // Update button to Continue state
+                    verifyBtn.innerHTML = 'Continue <i class="fa-solid fa-arrow-right text-sm"></i>';
+                    verifyBtn.classList.remove('opacity-80', 'cursor-not-allowed', 'bg-brand-navy', 'hover:bg-[#1a2d4c]');
+                    verifyBtn.classList.add('bg-brand-gold', 'hover:bg-[#D5901F]', 'text-brand-navy', 'shadow-[0_8px_20px_rgba(230,161,41,0.3)]');
+                    
+                    // Reset click handler for "Continue" action
+                    verifyBtn.onclick = () => {
+                        console.log('Proceed to next screen');
+                    };
+                }, 1500);
+            });
+        });
+    </script>
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Subscription & Privacy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="onboarding-3">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col justify-between px-6 py-10 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header (Back / Progress / Skip) -->
+        <div id="onboarding-header" class="flex justify-between items-center w-full pt-2 z-20">
+            <!-- Back Button -->
+            <button class="text-sm font-semibold text-gray-400 hover:text-brand-navy transition-colors px-2 py-1 flex items-center gap-1">
+                <i class="fa-solid fa-chevron-left text-xs"></i> Back
+            </button>
+            
+            <!-- Progress Dots -->
+            <div id="progress-stepper" class="flex gap-2 items-center">
+                <div class="w-2 h-2 rounded-full bg-gray-200"></div>
+                <div class="w-2 h-2 rounded-full bg-gray-200"></div>
+                <div class="w-8 h-2 rounded-full bg-brand-navy"></div>
+            </div>
+            
+            <!-- Skip Button -->
+            <button class="text-sm font-semibold text-gray-400 hover:text-brand-navy transition-colors px-2 py-1">
+                Skip
+            </button>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col mt-6 z-10 animate-fade-in relative overflow-y-auto pb-4" style="scrollbar-width: none;">
+            
+            <!-- Typography & Copy -->
+            <div class="text-center px-2 mb-6">
+                <h1 class="text-[28px] leading-[1.2] font-bold text-brand-navy mb-3 tracking-tight">
+                    Choose Your <br>
+                    <span class="text-brand-gold">Parking Plan</span>
+                </h1>
+                <p class="text-[15px] text-gray-500 font-medium leading-relaxed">
+                    Start with a 14-day free trial. Cancel anytime.
+                </p>
+            </div>
+
+            <!-- Subscription Plans Section -->
+            <div id="subscription-plans" class="space-y-4 px-2 mb-8">
+                
+                <!-- Plan Card: Premium (Active State) -->
+                <div class="relative p-5 rounded-[16px] bg-white border-2 border-brand-gold shadow-[0_4px_12px_rgba(230,161,41,0.15)] flex flex-col gap-3 cursor-pointer overflow-hidden">
+                    <!-- Recommended Badge -->
+                    <div class="absolute top-0 right-0 bg-brand-gold text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                        Recommended
+                    </div>
+                    
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-lg font-bold text-brand-navy">Premium</h3>
+                            <p class="text-sm text-gray-500">Full access + EV tracking</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xl font-bold text-brand-navy">99kr</span>
+                            <span class="text-xs text-gray-500">/mo</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-2 mt-2">
+                        <i class="fa-solid fa-circle-check text-brand-success text-sm"></i>
+                        <span class="text-sm text-brand-navy font-medium">AI Sign Scanning</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-brand-success text-sm"></i>
+                        <span class="text-sm text-brand-navy font-medium">Street Cleaning Alerts</span>
+                    </div>
+                </div>
+
+                <!-- Plan Card: Basic (Inactive State) -->
+                <div class="p-5 rounded-[16px] bg-white border border-gray-200 shadow-sm flex flex-col gap-3 cursor-pointer hover:border-gray-300 transition-colors">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-lg font-bold text-brand-navy">Basic</h3>
+                            <p class="text-sm text-gray-500">Essential parking tools</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xl font-bold text-brand-navy">0kr</span>
+                            <span class="text-xs text-gray-500">/mo</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-2 mt-2 opacity-60">
+                        <i class="fa-solid fa-circle-check text-gray-400 text-sm"></i>
+                        <span class="text-sm text-gray-500 font-medium">Manual Booking</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GDPR / Privacy Shield Section -->
+            <div id="gdpr-privacy-shield" class="px-4 py-4 mb-6 bg-gray-50 rounded-[16px] border border-gray-100 flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-brand-success/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-shield-halved text-brand-success text-sm"></i>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-brand-navy mb-1">Privacy-First Guarantee</h4>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        Your data is encrypted and securely stored. We comply with GDPR and never sell your personal information.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Spacer to push buttons to bottom -->
+            <div class="flex-grow"></div>
+            
+            <!-- Auth Actions Footer -->
+            <div id="auth-actions-footer" class="flex flex-col gap-3 mt-auto shrink-0 w-full">
+                <!-- Primary CTA -->
+                <button class="w-full bg-brand-gold hover:bg-[#D49020] text-white font-bold py-4 px-6 rounded-2xl transition-colors shadow-[0_8px_20px_rgba(230,161,41,0.25)] flex items-center justify-center gap-2 group">
+                    Create account
+                    <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                </button>
+                
+                <!-- Secondary Action -->
+                <div class="text-center mt-2">
+                    <span class="text-sm text-gray-500">Already have an account?</span>
+                    <button class="text-sm font-bold text-brand-navy hover:text-brand-gold transition-colors ml-1">
+                        Log in
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

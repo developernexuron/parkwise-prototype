@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93'
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Map background pattern */
+        .map-bg {
+            background-color: #f0f3f5;
+            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        /* Range slider styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #E6A129;
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #E5E7EB;
+            border-radius: 2px;
+        }
+        
+        /* Toggle Switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #28A745;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #28A745;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="search-filters">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- MAP LAYER (Background) - Blurred for context -->
+        <div id="map-layer" class="absolute inset-0 z-0 map-bg filter blur-[2px]">
+            <img class="w-full h-full object-cover opacity-60" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/9540a71a7c-474a3b46ff7ab52ba8bc.png" alt="Blurred map background" />
+        </div>
+
+        <!-- SEARCH OVERLAY (Main Content) -->
+        <div class="absolute inset-0 z-20 flex flex-col pointer-events-none">
+            
+            <!-- Header & Search Bar -->
+            <div class="bg-white/95 backdrop-blur-md pb-4 pt-12 px-4 shadow-sm pointer-events-auto rounded-b-[24px] z-30">
+                <div class="flex items-center gap-3 w-full mb-4">
+                    <button class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-brand-navy hover:bg-gray-100 transition-colors shrink-0">
+                        <i class="fa-solid fa-arrow-left text-[18px]"></i>
+                    </button>
+                    
+                    <div class="flex-1 relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+                        </div>
+                        <input type="text" placeholder="Search by street, address, or POI" autofocus class="w-full h-12 bg-gray-50 rounded-full pl-11 pr-10 text-[15px] font-medium text-brand-navy focus:outline-none focus:ring-2 focus:ring-brand-gold border-none placeholder:text-gray-400">
+                        <button class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                            <i class="fa-solid fa-microphone text-brand-navy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Shortcuts -->
+                <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-1">
+                    <button class="flex flex-col items-center gap-1 min-w-[72px]">
+                        <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-brand-navy shadow-sm border border-gray-100">
+                            <i class="fa-solid fa-house text-[16px]"></i>
+                        </div>
+                        <span class="text-[11px] font-medium text-brand-navy">Home</span>
+                    </button>
+                    <button class="flex flex-col items-center gap-1 min-w-[72px]">
+                        <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-brand-navy shadow-sm border border-gray-100">
+                            <i class="fa-solid fa-briefcase text-[16px]"></i>
+                        </div>
+                        <span class="text-[11px] font-medium text-brand-navy">Work</span>
+                    </button>
+                    <button class="flex flex-col items-center gap-1 min-w-[72px]">
+                        <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-brand-navy shadow-sm border border-gray-100">
+                            <i class="fa-solid fa-star text-[16px] text-brand-gold"></i>
+                        </div>
+                        <span class="text-[11px] font-medium text-brand-navy">Saved</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scrollable Content Area -->
+            <div class="flex-1 overflow-y-auto pointer-events-auto hide-scrollbar pb-32">
+                
+                <!-- Recent Searches -->
+                <div class="px-4 py-6 bg-white/90 backdrop-blur-sm mt-2 rounded-[24px] mx-2 shadow-sm">
+                    <h3 class="text-[14px] font-bold text-brand-navy mb-4 px-2">Recent Searches</h3>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
+                                    <i class="fa-regular fa-clock text-[14px]"></i>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-[14px] font-medium text-brand-navy">Kungsgatan 12</span>
+                                    <span class="text-[12px] text-gray-500">Norrmalm, Stockholm</span>
+                                </div>
+                            </div>
+                            <button class="text-gray-400 hover:text-brand-danger">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="h-[1px] bg-gray-100 mx-3"></div>
+                        <div class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
+                                    <i class="fa-regular fa-clock text-[14px]"></i>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-[14px] font-medium text-brand-navy">Mall of Scandinavia</span>
+                                    <span class="text-[12px] text-gray-500">Solna</span>
+                                </div>
+                            </div>
+                            <button class="text-gray-400 hover:text-brand-danger">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Filters Sheet -->
+                <div class="bg-white rounded-t-[32px] mt-4 px-6 py-6 shadow-[0_-8px_30px_rgba(0,0,0,0.08)] min-h-[400px]">
+                    <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+                    
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-[18px] font-bold text-brand-navy">Filters</h2>
+                        <button class="text-[13px] font-medium text-brand-gold">Reset</button>
+                    </div>
+
+                    <!-- Filter Options -->
+                    <div class="flex flex-col gap-6">
+                        
+                        <!-- Price Range -->
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[14px] font-semibold text-brand-navy">Price Range (kr/h)</span>
+                                <span class="text-[13px] font-medium text-brand-gold">0 - 100 kr</span>
+                            </div>
+                            <div class="relative pt-1">
+                                <input type="range" min="0" max="150" value="100" class="w-full h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                <div class="absolute left-0 top-1 h-1 bg-brand-gold rounded-lg" style="width: 66%;"></div>
+                            </div>
+                            <div class="flex justify-between text-[11px] text-gray-400 mt-2">
+                                <span>Free</span>
+                                <span>150+ kr</span>
+                            </div>
+                        </div>
+
+                        <!-- Time Limit -->
+                        <div>
+                            <span class="text-[14px] font-semibold text-brand-navy block mb-3">Parking Duration</span>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="px-4 py-2 rounded-full border border-gray-200 text-[13px] font-medium text-gray-600 hover:border-brand-navy hover:text-brand-navy">Any</button>
+                                <button class="px-4 py-2 rounded-full border border-brand-navy bg-brand-navy text-white text-[13px] font-medium shadow-sm">1-2 Hours</button>
+                                <button class="px-4 py-2 rounded-full border border-gray-200 text-[13px] font-medium text-gray-600 hover:border-brand-navy hover:text-brand-navy">3-4 Hours</button>
+                                <button class="px-4 py-2 rounded-full border border-gray-200 text-[13px] font-medium text-gray-600 hover:border-brand-navy hover:text-brand-navy">24h+</button>
+                            </div>
+                        </div>
+
+                        <!-- Toggles -->
+                        <div class="flex flex-col gap-4">
+                            <!-- EV Only -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[#007AFF]">
+                                        <i class="fa-solid fa-bolt text-[14px]"></i>
+                                    </div>
+                                    <span class="text-[14px] font-medium text-brand-navy">EV Charging Only</span>
+                                </div>
+                                <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                                    <input type="checkbox" name="toggle" id="toggle-ev" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-200 appearance-none cursor-pointer z-10 transition-all duration-300"/>
+                                    <label for="toggle-ev" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-200 cursor-pointer transition-colors duration-300"></label>
+                                </div>
+                            </div>
+
+                            <!-- Exclude Street Cleaning -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500">
+                                        <i class="fa-solid fa-broom text-[14px]"></i>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-[14px] font-medium text-brand-navy">Avoid Street Cleaning</span>
+                                        <span class="text-[11px] text-gray-400">Hide spots cleaning in < 24h</span>
+                                    </div>
+                                </div>
+                                <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                                    <input type="checkbox" name="toggle" id="toggle-cleaning" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-[#28A745] appearance-none cursor-pointer z-10 transition-all duration-300 right-0"/>
+                                    <label for="toggle-cleaning" class="toggle-label block overflow-hidden h-6 rounded-full bg-[#28A745] cursor-pointer transition-colors duration-300"></label>
+                                </div>
+                            </div>
+
+                            <!-- Accessibility -->
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[#007AFF]">
+                                        <i class="fa-brands fa-accessible-icon text-[14px]"></i>
+                                    </div>
+                                    <span class="text-[14px] font-medium text-brand-navy">Accessible Parking</span>
+                                </div>
+                                <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                                    <input type="checkbox" name="toggle" id="toggle-access" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-200 appearance-none cursor-pointer z-10 transition-all duration-300"/>
+                                    <label for="toggle-access" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-200 cursor-pointer transition-colors duration-300"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sticky Apply Button Area -->
+            <div class="absolute bottom-[90px] left-0 w-full px-6 py-4 bg-gradient-to-t from-white via-white to-transparent pointer-events-auto z-30 flex justify-center">
+                <button class="w-full max-w-[280px] h-14 bg-brand-navy text-white rounded-full font-semibold text-[15px] shadow-[0_8px_20px_rgba(20,34,58,0.3)] flex items-center justify-center gap-2 hover:bg-[#1E3354] transition-colors">
+                    Show 142 Results
+                </button>
+            </div>
+        </div>
+
+        <!-- BOTTOM UI: Navigation -->
+        <div class="absolute bottom-0 left-0 w-full z-40 flex flex-col">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-40">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters (Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy">
+                    <div class="w-12 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Search</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Activity</span>
+                </button>
+
+                <!-- Profile -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-regular fa-user text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Profile</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

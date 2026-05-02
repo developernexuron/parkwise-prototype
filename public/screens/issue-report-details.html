@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Issue Reporting (Details)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100',
+                            swishBlue: '#005596',
+                            blue: '#444CE7',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="issue-report-details">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-[#F9FAFB] text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header -->
+        <div id="header" class="pt-12 pb-4 px-5 bg-white shadow-[0_2px_12px_rgba(20,34,58,0.04)] relative z-30 border-b border-brand-navy/5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button class="w-8 h-8 flex items-center justify-center rounded-full bg-brand-navy/5 text-brand-navy hover:bg-brand-navy/10 transition-colors">
+                    <i class="fa-solid fa-arrow-left text-[14px]"></i>
+                </button>
+                <h1 class="text-[20px] font-bold text-brand-navy">Report Details</h1>
+            </div>
+            <div class="text-[12px] font-medium text-brand-navy/60">Step 2/2</div>
+        </div>
+
+        <!-- Scrollable Content Area -->
+        <div id="main-content" class="flex-1 overflow-y-auto hide-scrollbar pb-[120px] bg-[#F9FAFB]">
+            
+            <div class="px-5 py-6 flex flex-col gap-6">
+                
+                <!-- Location Preview Card -->
+                <div id="location-preview" class="bg-white rounded-[24px] p-4 shadow-[0_8px_24px_rgba(20,34,58,0.06)] border border-brand-navy/5">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 rounded-[16px] overflow-hidden bg-brand-navy/5 relative flex-shrink-0">
+                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/3037978def-4c9626533dec7457312f.png" alt="A map snippet showing a street corner in Stockholm with a parking pin" />
+                        </div>
+                        <div class="flex flex-col justify-center py-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 rounded-[6px] bg-brand-navy/5 text-brand-navy text-[10px] font-bold uppercase tracking-wide">Wrong Price</span>
+                            </div>
+                            <h3 class="text-[15px] font-bold text-brand-navy leading-tight">Sveavägen 44</h3>
+                            <p class="text-[12px] text-brand-navy/60 mt-0.5"><i class="fa-solid fa-location-dot text-[10px] mr-1"></i> Current Location (Auto-filled)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description Input -->
+                <div id="description-section" class="flex flex-col gap-2">
+                    <label for="description" class="text-[14px] font-bold text-brand-navy ml-1">Description</label>
+                    <textarea id="description" rows="4" placeholder="Please describe the issue in detail..." class="w-full bg-white rounded-[20px] p-4 text-[14px] text-brand-navy border border-brand-navy/10 focus:border-brand-navy/30 focus:ring-4 focus:ring-brand-navy/5 transition-all outline-none resize-none shadow-[0_2px_12px_rgba(20,34,58,0.02)] placeholder:text-brand-navy/40"></textarea>
+                </div>
+
+                <!-- Photo Upload Grid -->
+                <div id="photo-section" class="flex flex-col gap-2">
+                    <div class="flex items-center justify-between ml-1 mb-1">
+                        <label class="text-[14px] font-bold text-brand-navy">Add Photos</label>
+                        <span class="text-[12px] text-brand-navy/60">Max 3</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <!-- Upload Button -->
+                        <button class="aspect-square bg-white rounded-[16px] border-2 border-dashed border-brand-navy/15 flex flex-col items-center justify-center gap-2 hover:bg-brand-navy/5 hover:border-brand-navy/30 transition-colors group">
+                            <div class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy group-hover:bg-brand-navy/10 transition-colors">
+                                <i class="fa-solid fa-plus text-[14px]"></i>
+                            </div>
+                            <span class="text-[11px] font-medium text-brand-navy/60">Upload</span>
+                        </button>
+                        <!-- Image Preview (Mock) -->
+                        <div class="aspect-square rounded-[16px] overflow-hidden relative border border-brand-navy/10 shadow-[0_2px_8px_rgba(20,34,58,0.05)]">
+                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c578100d81-fe76fa0d4fa6582cb809.png" alt="A blurry photo of a parking sign in Stockholm" />
+                            <button class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-brand-danger shadow-sm hover:bg-white transition-colors">
+                                <i class="fa-solid fa-xmark text-[12px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Toggle -->
+                <div id="contact-toggle-section" class="bg-white rounded-[20px] p-4 border border-brand-navy/10 shadow-[0_2px_12px_rgba(20,34,58,0.02)] flex items-center justify-between mt-2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-[12px] bg-brand-navy/5 flex items-center justify-center text-brand-navy">
+                            <i class="fa-solid fa-envelope text-[16px]"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-[14px] font-bold text-brand-navy">Contact me about this</h4>
+                            <p class="text-[11px] text-brand-navy/60 mt-0.5">We may email you for details</p>
+                        </div>
+                    </div>
+                    <!-- Toggle Switch Active -->
+                    <div class="w-12 h-7 bg-brand-success rounded-full relative cursor-pointer shadow-inner" onclick="toggleContactSwitch(this)">
+                        <div class="w-5 h-5 bg-white rounded-full absolute top-1 right-1 shadow-[0_2px_4px_rgba(0,0,0,0.1)] transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- Privacy Note -->
+                <p class="text-[11px] text-center text-brand-navy/50 px-4 mt-2 leading-relaxed">
+                    By submitting this report, you agree to our <a href="#" class="text-brand-navy font-semibold underline decoration-brand-navy/30 underline-offset-2">Privacy Policy</a>. Your location data is only used to verify the report.
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Sticky Bottom CTA -->
+        <div id="sticky-cta" class="absolute bottom-[90px] left-0 w-full px-5 py-4 bg-gradient-to-t from-[#F9FAFB] via-[#F9FAFB] to-transparent z-40 pointer-events-none">
+            <button class="w-full h-[56px] rounded-[20px] bg-brand-navy text-[16px] font-bold text-white shadow-[0_8px_24px_rgba(20,34,58,0.25)] hover:bg-brand-navy/90 hover:-translate-y-0.5 transition-all pointer-events-auto flex items-center justify-center gap-2">
+                Submit Report <i class="fa-solid fa-paper-plane text-[14px]"></i>
+            </button>
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved exactly from context, Profile Active) -->
+        <div id="footer" class="absolute bottom-0 left-0 w-full z-50 flex flex-col pointer-events-none">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5 pointer-events-auto">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Side Menu (Profile Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-bars text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Menu</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleContactSwitch(element) {
+            const isActive = element.classList.contains('bg-brand-success');
+            const knob = element.querySelector('div');
+            
+            if (isActive) {
+                element.classList.remove('bg-brand-success');
+                element.classList.add('bg-brand-navy/20');
+                knob.classList.remove('right-1');
+                knob.classList.add('left-1');
+            } else {
+                element.classList.remove('bg-brand-navy/20');
+                element.classList.add('bg-brand-success');
+                knob.classList.remove('left-1');
+                knob.classList.add('right-1');
+            }
+        }
+    </script>
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

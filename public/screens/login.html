@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        /* Custom Checkbox */
+        .custom-checkbox {
+            appearance: none;
+            background-color: transparent;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.15em;
+            height: 1.15em;
+            border: 2px solid #D1D5DB;
+            border-radius: 0.25em;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .custom-checkbox::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em white;
+            background-color: white;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        .custom-checkbox:checked {
+            background-color: #14223A;
+            border-color: #14223A;
+        }
+
+        .custom-checkbox:checked::before {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="login">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Back Button (Auth Flow Specific) -->
+        <div class="absolute top-6 left-6 z-20">
+            <button class="w-10 h-10 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-brand-navy hover:bg-gray-50 transition-colors">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col px-6 z-10 animate-fade-in relative overflow-y-auto pt-24 pb-10" style="scrollbar-width: none;">
+            
+            <!-- Header Section -->
+            <div id="brand_header" class="flex flex-col mb-8">
+                <h1 class="text-[32px] font-bold text-brand-navy mb-2 tracking-tight">Welcome back</h1>
+                <p class="text-[15px] text-gray-500 font-medium leading-relaxed">
+                    Log in to manage your parking and active sessions.
+                </p>
+            </div>
+
+            <!-- Error State Messaging (Hidden by default, shown for demonstration) -->
+            <div id="error_status_messaging" class="hidden bg-brand-danger/10 border border-brand-danger/20 rounded-[12px] p-4 mb-6 flex items-start gap-3">
+                <i class="fa-solid fa-circle-exclamation text-brand-danger mt-0.5"></i>
+                <div>
+                    <h4 class="text-[14px] font-semibold text-brand-danger mb-1">Too many attempts</h4>
+                    <p class="text-[13px] text-brand-danger/80">Please wait 5 minutes before trying again or reset your password.</p>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login_form" class="flex flex-col gap-5 flex-1">
+                
+                <!-- Email Input -->
+                <div class="flex flex-col gap-2">
+                    <label for="email" class="text-[14px] font-semibold text-gray-700">Email address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-regular fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" id="email" placeholder="name@example.com" class="w-full h-[48px] bg-gray-50 border border-gray-200 text-brand-navy text-[15px] rounded-[12px] pl-11 pr-4 focus:outline-none focus:border-brand-navy focus:ring-1 focus:ring-brand-navy transition-all placeholder:text-gray-400 font-medium" required>
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="flex flex-col gap-2">
+                    <label for="password" class="text-[14px] font-semibold text-gray-700">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400 text-[14px]"></i>
+                        </div>
+                        <input type="password" id="password" placeholder="••••••••" class="w-full h-[48px] bg-gray-50 border border-gray-200 text-brand-navy text-[15px] rounded-[12px] pl-11 pr-12 focus:outline-none focus:border-brand-navy focus:ring-1 focus:ring-brand-navy transition-all placeholder:text-gray-400 font-medium" required>
+                        <button type="button" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-brand-navy transition-colors">
+                            <i class="fa-regular fa-eye-slash text-[14px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between mt-1 mb-2">
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input type="checkbox" class="custom-checkbox">
+                        <span class="text-[14px] font-medium text-gray-600 group-hover:text-brand-navy transition-colors">Remember me</span>
+                    </label>
+                    <a href="#" class="text-[14px] font-semibold text-brand-navy hover:text-brand-gold transition-colors">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <!-- Login Button -->
+                <button type="button" id="login-btn" class="w-full h-[52px] bg-brand-gold hover:bg-[#D5901F] text-brand-navy font-bold rounded-[12px] transition-colors shadow-[0_8px_20px_rgba(230,161,41,0.2)] flex items-center justify-center text-[16px] mt-2">
+                    Log In
+                </button>
+
+                <!-- Divider -->
+                <div class="flex items-center gap-4 my-4">
+                    <div class="h-px bg-gray-200 flex-1"></div>
+                    <span class="text-[13px] font-medium text-gray-400 uppercase tracking-wider">Or continue with</span>
+                    <div class="h-px bg-gray-200 flex-1"></div>
+                </div>
+
+                <!-- Social Logins -->
+                <div class="flex gap-4">
+                    <button type="button" class="flex-1 h-[48px] bg-white border border-gray-200 rounded-[12px] flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors">
+                        <i class="fa-brands fa-apple text-[18px] text-brand-navy"></i>
+                        <span class="text-[14px] font-semibold text-brand-navy">Apple</span>
+                    </button>
+                    <button type="button" class="flex-1 h-[48px] bg-white border border-gray-200 rounded-[12px] flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors">
+                        <i class="fa-brands fa-google text-[16px] text-brand-navy"></i>
+                        <span class="text-[14px] font-semibold text-brand-navy">Google</span>
+                    </button>
+                </div>
+
+            </form>
+            
+            <!-- Spacer to push footer down -->
+            <div class="flex-grow min-h-[32px]"></div>
+            
+            <!-- Auth Footer Links -->
+            <div id="auth_footer_links" class="mt-auto shrink-0 w-full text-center pb-2">
+                <p class="text-[14px] text-gray-500 font-medium">
+                    Don't have an account? 
+                    <a href="#" class="font-bold text-brand-navy hover:text-brand-gold transition-colors underline underline-offset-2 decoration-gray-300">
+                        Create account
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Biometric Prompt Overlay (Hidden by default) -->
+        <div id="biometric_onboarding" class="absolute inset-0 bg-brand-navy/60 backdrop-blur-sm z-50 flex items-end justify-center hidden opacity-0 transition-opacity duration-300">
+            <div class="bg-white w-full rounded-t-[24px] p-6 pb-10 transform translate-y-full transition-transform duration-300" id="biometric-sheet">
+                
+                <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+                
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-16 h-16 rounded-full bg-brand-navy/5 flex items-center justify-center mb-5">
+                        <i class="fa-solid fa-fingerprint text-[32px] text-brand-navy"></i>
+                    </div>
+                    
+                    <h3 class="text-[22px] font-bold text-brand-navy mb-2">Enable Face ID</h3>
+                    <p class="text-[15px] text-gray-500 font-medium leading-relaxed mb-8 px-4">
+                        Log in faster and more securely next time by enabling biometric authentication.
+                    </p>
+                    
+                    <div class="w-full flex flex-col gap-3">
+                        <button class="w-full h-[52px] bg-brand-navy hover:bg-[#1E3354] text-white font-bold rounded-[12px] transition-colors flex items-center justify-center text-[16px]">
+                            Enable Now
+                        </button>
+                        <button id="skip-biometric-btn" class="w-full h-[52px] bg-transparent text-gray-500 font-semibold rounded-[12px] hover:bg-gray-50 transition-colors flex items-center justify-center text-[15px]">
+                            Maybe Later
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginBtn = document.getElementById('login-btn');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const errorMsg = document.getElementById('error_status_messaging');
+            const biometricOverlay = document.getElementById('biometric_onboarding');
+            const biometricSheet = document.getElementById('biometric-sheet');
+            const skipBiometricBtn = document.getElementById('skip-biometric-btn');
+            
+            // Demo logic: Show error if empty, else show biometric prompt
+            loginBtn.addEventListener('click', () => {
+                if(emailInput.value === '' || passwordInput.value === '') {
+                    // Show error state
+                    errorMsg.classList.remove('hidden');
+                    errorMsg.classList.add('animate-fade-in');
+                    emailInput.classList.add('border-brand-danger', 'focus:ring-brand-danger', 'focus:border-brand-danger');
+                    passwordInput.classList.add('border-brand-danger', 'focus:ring-brand-danger', 'focus:border-brand-danger');
+                } else {
+                    // Clear error, show loading, then show biometric
+                    errorMsg.classList.add('hidden');
+                    loginBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Logging in...';
+                    loginBtn.classList.add('opacity-80', 'cursor-not-allowed');
+                    
+                    setTimeout(() => {
+                        // Reset button
+                        loginBtn.innerHTML = 'Log In';
+                        loginBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                        
+                        // Show biometric prompt
+                        biometricOverlay.classList.remove('hidden');
+                        // Small delay to allow display:block to apply before animating opacity
+                        setTimeout(() => {
+                            biometricOverlay.classList.remove('opacity-0');
+                            biometricSheet.classList.remove('translate-y-full');
+                        }, 10);
+                    }, 1500);
+                }
+            });
+
+            // Close biometric prompt
+            skipBiometricBtn.addEventListener('click', () => {
+                biometricOverlay.classList.add('opacity-0');
+                biometricSheet.classList.add('translate-y-full');
+                setTimeout(() => {
+                    biometricOverlay.classList.add('hidden');
+                }, 300);
+            });
+        });
+    </script>
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

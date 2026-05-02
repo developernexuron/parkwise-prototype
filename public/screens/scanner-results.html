@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Scanner Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100', // Swish yellow
+                            swishBlue: '#005596', // Swish blue
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="scanner-results">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-brand-navy text-white rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Simulated Camera Feed Background (Blurred for results context) -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/e9943fac0f-bd060e9539ba2e90f1c2.png" alt="Parking Sign Camera Feed" class="w-full h-full object-cover blur-sm opacity-40">
+            <div class="absolute inset-0 bg-brand-navy/60"></div>
+        </div>
+
+        <!-- Header -->
+        <div class="px-6 pt-12 pb-4 z-30 relative flex items-center justify-between">
+            <button class="w-10 h-10 rounded-full bg-brand-navy/50 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-navy/70 transition-colors border border-white/10">
+                <i class="fa-solid fa-xmark text-[16px]"></i>
+            </button>
+            <h1 class="text-[16px] font-semibold tracking-wide">Scan Results</h1>
+            <button class="w-10 h-10 rounded-full bg-brand-navy/50 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-navy/70 transition-colors border border-white/10">
+                <i class="fa-solid fa-ellipsis text-[16px]"></i>
+            </button>
+        </div>
+
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 relative z-20 overflow-y-auto hide-scrollbar px-6 pb-32">
+            
+            <!-- Interpretation Card -->
+            <div class="bg-white rounded-[24px] p-6 mb-4 shadow-xl text-brand-navy relative overflow-hidden mt-2">
+                <!-- Confidence Indicator Badge -->
+                <div class="absolute top-4 right-4 bg-brand-success/10 text-brand-success px-3 py-1 rounded-full flex items-center gap-1.5 border border-brand-success/20">
+                    <i class="fa-solid fa-circle-check text-[12px]"></i>
+                    <span class="text-[12px] font-bold">98% Match</span>
+                </div>
+
+                <div class="flex items-start gap-4 mb-6 mt-2">
+                    <div class="w-12 h-12 rounded-[12px] bg-brand-navy/5 flex items-center justify-center border border-brand-navy/10 shrink-0">
+                        <i class="fa-solid fa-square-parking text-[24px] text-brand-navy"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-[20px] font-bold leading-tight mb-1">Paid Parking</h2>
+                        <p class="text-[14px] text-brand-muted font-medium">Zone 3 • Valid for current time</p>
+                    </div>
+                </div>
+
+                <!-- Plain Language Explanation -->
+                <div class="bg-[#F9FAFB] rounded-[16px] p-4 mb-6 border border-gray-100">
+                    <p class="text-[14px] font-medium leading-relaxed text-brand-navy">
+                        You can park here right now. It costs <strong class="text-brand-navy">30 SEK/hour</strong>. Max duration is 2 hours.
+                    </p>
+                </div>
+
+                <!-- Rules Grid -->
+                <div class="grid grid-cols-2 gap-3 mb-2">
+                    <div class="border border-gray-100 rounded-[12px] p-3">
+                        <span class="text-[11px] text-brand-muted font-bold uppercase tracking-wider block mb-1">Allowed Hours</span>
+                        <span class="text-[14px] font-semibold">08:00 - 18:00</span>
+                    </div>
+                    <div class="border border-gray-100 rounded-[12px] p-3">
+                        <span class="text-[11px] text-brand-muted font-bold uppercase tracking-wider block mb-1">Fees</span>
+                        <span class="text-[14px] font-semibold">30 SEK / hr</span>
+                    </div>
+                    <div class="border border-gray-100 rounded-[12px] p-3 col-span-2">
+                        <span class="text-[11px] text-brand-muted font-bold uppercase tracking-wider block mb-1">Restrictions</span>
+                        <span class="text-[14px] font-medium text-brand-danger flex items-center gap-2">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            Max 2 hours stay
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Street Cleaning Alert -->
+            <div class="bg-brand-gold/10 border border-brand-gold/30 rounded-[20px] p-4 mb-6 flex gap-4 backdrop-blur-sm">
+                <div class="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-broom text-brand-gold text-[16px]"></i>
+                </div>
+                <div>
+                    <h3 class="text-[15px] font-bold text-white mb-1">Street Cleaning Tomorrow</h3>
+                    <p class="text-[13px] text-white/80 leading-snug">
+                        Do not park here between 08:00 - 12:00 tomorrow (Tuesday). Vehicle will be towed.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Action Grid -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <button class="bg-brand-success text-white rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 shadow-lg hover:bg-brand-success/90 transition-colors">
+                    <i class="fa-solid fa-ticket text-[20px]"></i>
+                    <span class="text-[14px] font-bold">Book Now</span>
+                </button>
+                <button class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 hover:bg-white/20 transition-colors">
+                    <i class="fa-solid fa-location-dot text-[20px]"></i>
+                    <span class="text-[14px] font-medium text-center leading-tight">Find Nearby<br>Alternatives</span>
+                </button>
+                <button class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 hover:bg-white/20 transition-colors">
+                    <i class="fa-regular fa-bookmark text-[20px]"></i>
+                    <span class="text-[14px] font-medium">Save Rule</span>
+                </button>
+                <button class="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 hover:bg-white/20 transition-colors">
+                    <i class="fa-regular fa-flag text-[20px]"></i>
+                    <span class="text-[14px] font-medium">Report Mismatch</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved from context) -->
+        <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner (Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Activity</span>
+                </button>
+
+                <!-- Profile -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-regular fa-user text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Profile</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Launch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        /* Loading spinner animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 3px solid #28A745;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        /* Pulse animation for logo */
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.98); }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative" data-pw-screen="splash">
+
+    <!-- Mobile Container Wrapper -->
+    <div class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col justify-between px-6 py-12 z-10">
+        
+        <!-- Background Illustration (Stockholm Hint) -->
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none flex items-end justify-center pb-20">
+            <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Abstract geometric shapes representing city skyline -->
+                <path d="M0 200V150L30 150V120L60 120V160L90 160V100L120 100V140L150 140V80L180 80V130L210 130V60L240 60V110L270 110V90L300 90V140L330 140V120L375 120V200H0Z" fill="white"/>
+                <path d="M40 160V90L55 90V160H40Z" fill="white" fill-opacity="0.5"/>
+                <path d="M160 180V70L175 70V180H160Z" fill="white" fill-opacity="0.5"/>
+                <path d="M280 150V50L295 50V150H280Z" fill="white" fill-opacity="0.5"/>
+            </svg>
+        </div>
+
+        <!-- Top Section: Branding -->
+        <div id="splash_branding" class="flex flex-col items-center mt-16 z-10 animate-fade-in" style="animation-delay: 0.1s;">
+            <!-- Logo Icon -->
+            <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-lg mb-6 animate-pulse-soft">
+                <i class="fa-solid fa-square-parking text-4xl text-brand-navy"></i>
+            </div>
+            
+            <!-- Brand Name -->
+            <h1 class="text-4xl font-bold tracking-tight text-white mb-2">Park<span class="text-brand-gold">Wise</span></h1>
+            
+            <!-- Tagline -->
+            <p class="text-sm text-gray-300 font-medium tracking-wide">Stockholm Parking Simplified</p>
+        </div>
+
+        <!-- Middle Section: Loading State (Active by default) -->
+        <div id="session_loader" class="flex flex-col items-center justify-center flex-grow z-10 animate-fade-in" style="animation-delay: 0.3s;">
+            <div class="spinner mb-6"></div>
+            <p class="text-base font-semibold text-white tracking-wide">Restoring your session...</p>
+            <p class="text-xs text-gray-400 mt-2">Connecting to live map data</p>
+        </div>
+
+        <!-- Middle Section: Error State (Hidden by default) -->
+        <!-- To view this state, remove 'hidden' class and add it to 'session_loader' -->
+        <div id="connectivity_fallback" class="hidden flex-col items-center justify-center flex-grow z-10 animate-fade-in">
+            <div class="w-16 h-16 rounded-full bg-brand-danger/20 flex items-center justify-center mb-6">
+                <i class="fa-solid fa-wifi text-2xl text-brand-danger"></i>
+            </div>
+            <h2 class="text-lg font-bold text-white mb-2">Connection Lost</h2>
+            <p class="text-sm text-gray-300 text-center mb-8 max-w-[250px]">We couldn't connect to the server. Please check your internet connection.</p>
+            
+            <button class="w-full bg-brand-gold hover:bg-yellow-500 text-brand-navy font-bold py-4 px-6 rounded-xl transition-colors shadow-[0_4px_14px_rgba(230,161,41,0.3)] flex items-center justify-center gap-2">
+                <i class="fa-solid fa-rotate-right"></i>
+                Retry Connection
+            </button>
+        </div>
+
+        <!-- Bottom Section: Version Info -->
+        <div id="action_footer" class="flex justify-center pb-4 z-10 animate-fade-in" style="animation-delay: 0.5s;">
+            <p class="text-[10px] text-gray-500 font-medium uppercase tracking-widest">Version 1.0.0</p>
+        </div>
+
+    </div>
+
+    <!-- Script to simulate loading and error states for demonstration -->
+    <script>
+        // For demonstration purposes: toggle between loading and error state after 3 seconds
+        /*
+        setTimeout(() => {
+            document.getElementById('session_loader').classList.add('hidden');
+            document.getElementById('session_loader').classList.remove('flex');
+            
+            document.getElementById('connectivity_fallback').classList.remove('hidden');
+            document.getElementById('connectivity_fallback').classList.add('flex');
+        }, 3000);
+        */
+    </script>
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

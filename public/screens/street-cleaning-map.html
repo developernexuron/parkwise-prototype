@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Street Cleaning (Map)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100', // Swish yellow
+                            swishBlue: '#005596', // Swish blue
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Custom map styling to match reference */
+        .map-bg {
+            background-color: #E5E7EB; /* Light grey base */
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.8) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.8) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .cleaning-zone-polygon {
+            fill: rgba(20, 34, 58, 0.15);
+            stroke: #14223A;
+            stroke-width: 2;
+            stroke-dasharray: 4 4;
+        }
+        
+        .cleaning-zone-active {
+            fill: rgba(220, 53, 69, 0.15);
+            stroke: #DC3545;
+            stroke-width: 2;
+            stroke-dasharray: 4 4;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="street-cleaning-map">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-brand-navy text-white rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header (Overlay on map) -->
+        <div class="px-6 pt-12 pb-4 z-30 absolute top-0 left-0 w-full flex flex-col gap-4 bg-gradient-to-b from-brand-navy/90 via-brand-navy/60 to-transparent pointer-events-none">
+            <div class="flex items-center justify-between pointer-events-auto">
+                <button class="w-10 h-10 rounded-[12px] bg-brand-navy flex items-center justify-center text-white shadow-lg border border-white/10 hover:bg-brand-navy/90 transition-colors">
+                    <i class="fa-solid fa-bars text-[16px]"></i>
+                </button>
+                <div class="bg-brand-navy shadow-lg rounded-[16px] px-4 py-2 border border-white/10 flex items-center gap-2">
+                    <i class="fa-solid fa-broom text-brand-gold text-[14px]"></i>
+                    <h1 class="text-[14px] font-bold tracking-wide">Street Cleaning</h1>
+                </div>
+                <button class="w-10 h-10 rounded-[12px] bg-brand-navy flex items-center justify-center text-white shadow-lg border border-white/10 hover:bg-brand-navy/90 transition-colors">
+                    <i class="fa-solid fa-bell text-[16px]"></i>
+                    <div class="absolute top-2 right-2.5 w-2 h-2 bg-brand-danger rounded-full border border-brand-navy"></div>
+                </button>
+            </div>
+            
+            <!-- Next Cleaning Banner -->
+            <div class="bg-brand-danger/90 backdrop-blur-md rounded-[16px] p-4 shadow-lg border border-brand-danger/20 flex items-center justify-between pointer-events-auto cursor-pointer hover:bg-brand-danger transition-colors">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-triangle-exclamation text-white text-[16px]"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-[14px] font-bold text-white leading-tight">Cleaning Tomorrow</h3>
+                        <p class="text-[12px] text-white/80 font-medium mt-0.5">Sveavägen 44 • 08:00 - 12:00</p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-chevron-right text-white/60 text-[14px]"></i>
+            </div>
+        </div>
+
+        <!-- Map Area -->
+        <div class="flex-1 relative z-10 map-bg w-full h-full">
+            <!-- Simulated Map Content (SVG for zones) -->
+            <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <!-- Zone 1: Safe (Grey) -->
+                <polygon points="50,150 180,120 200,220 80,260" class="cleaning-zone-polygon" />
+                
+                <!-- Zone 2: Active/Danger (Red) -->
+                <polygon points="220,250 350,210 320,380 190,340" class="cleaning-zone-active" />
+                
+                <!-- Zone 3: Safe (Grey) -->
+                <polygon points="40,400 150,380 120,520 20,480" class="cleaning-zone-polygon" />
+            </svg>
+
+            <!-- Map Markers -->
+            <!-- Safe Zone Marker -->
+            <div class="absolute top-[180px] left-[120px] transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer">
+                <div class="bg-brand-navy text-white text-[10px] font-bold px-2 py-1 rounded-[6px] mb-1 shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                    Kungsgatan • Safe
+                </div>
+                <div class="w-8 h-8 rounded-full bg-brand-navy/90 border-2 border-white shadow-lg flex items-center justify-center">
+                    <i class="fa-solid fa-check text-white text-[12px]"></i>
+                </div>
+            </div>
+
+            <!-- Danger Zone Marker -->
+            <div class="absolute top-[290px] left-[260px] transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer z-20">
+                <div class="bg-brand-danger text-white text-[10px] font-bold px-2 py-1 rounded-[6px] mb-1 shadow-md whitespace-nowrap">
+                    Sveavägen • Tomorrow
+                </div>
+                <div class="w-10 h-10 rounded-full bg-brand-danger border-2 border-white shadow-[0_4px_12px_rgba(220,53,69,0.4)] flex items-center justify-center relative">
+                    <div class="absolute inset-0 rounded-full border-2 border-brand-danger animate-ping opacity-20"></div>
+                    <i class="fa-solid fa-broom text-white text-[14px]"></i>
+                </div>
+            </div>
+
+            <!-- Safe Zone Marker 2 -->
+            <div class="absolute top-[450px] left-[80px] transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group cursor-pointer">
+                <div class="w-8 h-8 rounded-full bg-brand-navy/90 border-2 border-white shadow-lg flex items-center justify-center">
+                    <i class="fa-solid fa-check text-white text-[12px]"></i>
+                </div>
+            </div>
+
+            <!-- User Location Pin -->
+            <div class="absolute top-[350px] left-[180px] transform -translate-x-1/2 -translate-y-1/2">
+                <div class="w-12 h-12 rounded-full bg-brand-gold/20 flex items-center justify-center">
+                    <div class="w-6 h-6 rounded-full bg-brand-gold border-2 border-white shadow-md"></div>
+                </div>
+            </div>
+
+            <!-- Map Controls (Right side) -->
+            <div class="absolute right-4 top-[220px] flex flex-col gap-3 z-20">
+                <button class="w-10 h-10 rounded-[12px] bg-white text-brand-navy shadow-lg border border-brand-navy/5 flex items-center justify-center hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-location-crosshairs text-[16px]"></i>
+                </button>
+                <button class="w-10 h-10 rounded-[12px] bg-white text-brand-navy shadow-lg border border-brand-navy/5 flex items-center justify-center hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-plus text-[16px]"></i>
+                </button>
+                <button class="w-10 h-10 rounded-[12px] bg-white text-brand-navy shadow-lg border border-brand-navy/5 flex items-center justify-center hover:bg-gray-50 transition-colors">
+                    <i class="fa-solid fa-minus text-[16px]"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Sheet / Filters (Overlay) -->
+        <div class="absolute bottom-[90px] left-0 w-full px-4 z-30 pointer-events-none">
+            <div class="bg-white rounded-[24px] p-5 shadow-[0_-8px_30px_rgba(20,34,58,0.1)] pointer-events-auto border border-brand-navy/5">
+                
+                <!-- Handle -->
+                <div class="w-10 h-1 bg-brand-muted/20 rounded-full mx-auto mb-4"></div>
+
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-[16px] font-bold text-brand-navy">Filter Schedule</h2>
+                    <button class="text-brand-gold text-[13px] font-bold flex items-center gap-1 hover:opacity-80 transition-opacity">
+                        <i class="fa-regular fa-calendar text-[14px]"></i> View Calendar
+                    </button>
+                </div>
+
+                <!-- Date Filter Chips -->
+                <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2 mb-4">
+                    <button class="px-4 py-2 rounded-[12px] bg-brand-navy text-white text-[13px] font-medium whitespace-nowrap shadow-md">
+                        Tomorrow
+                    </button>
+                    <button class="px-4 py-2 rounded-[12px] bg-brand-navy/5 text-brand-navy border border-brand-navy/10 text-[13px] font-medium whitespace-nowrap hover:bg-brand-navy/10 transition-colors">
+                        This Week
+                    </button>
+                    <button class="px-4 py-2 rounded-[12px] bg-brand-navy/5 text-brand-navy border border-brand-navy/10 text-[13px] font-medium whitespace-nowrap hover:bg-brand-navy/10 transition-colors">
+                        Next Week
+                    </button>
+                </div>
+
+                <!-- Quick Toggle: Watch Street -->
+                <div class="bg-brand-navy/5 rounded-[16px] p-4 flex items-center justify-between border border-brand-navy/5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-brand-navy">
+                            <i class="fa-regular fa-eye text-[16px]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[14px] font-bold text-brand-navy leading-tight">Watch this area</h3>
+                            <p class="text-[11px] text-brand-muted font-medium mt-0.5">Get alerts before cleaning starts</p>
+                        </div>
+                    </div>
+                    <!-- Toggle Switch (Active) -->
+                    <div class="w-12 h-6 bg-brand-success rounded-full relative cursor-pointer shadow-inner">
+                        <div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved from context) -->
+        <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5">
+                
+                <!-- Home Map (Active for this screen context as it's a map view) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Profile -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-regular fa-user text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Profile</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Side Menu Overlay (Hidden by default, shown for structure if needed) -->
+        <!-- <div class="absolute inset-0 bg-brand-navy/80 z-[60] backdrop-blur-sm">
+            <div class="w-[280px] h-full bg-brand-navy shadow-2xl p-6 flex flex-col">
+                ... Menu content ...
+            </div>
+        </div> -->
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

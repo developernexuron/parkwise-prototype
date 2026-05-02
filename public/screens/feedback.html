@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Feedback</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100',
+                            swishBlue: '#005596',
+                            blue: '#444CE7',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="feedback">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-[#F9FAFB] text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header -->
+        <div id="header" class="pt-12 pb-4 px-5 bg-white shadow-[0_2px_12px_rgba(20,34,58,0.04)] relative z-30 border-b border-brand-navy/5 flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+                <button class="w-8 h-8 flex items-center justify-center rounded-full bg-brand-navy/5 text-brand-navy hover:bg-brand-navy/10 transition-colors">
+                    <i class="fa-solid fa-arrow-left text-[16px]"></i>
+                </button>
+                <h1 class="text-[18px] font-bold text-brand-navy">Feedback</h1>
+                <div class="w-8 h-8"></div>
+            </div>
+        </div>
+
+        <!-- Scrollable Content Area -->
+        <div id="main-content" class="flex-1 overflow-y-auto hide-scrollbar pb-[120px] bg-[#F9FAFB] flex flex-col items-center justify-start pt-6 px-5">
+            
+            <!-- Rating Section -->
+            <div class="w-full bg-white rounded-[20px] p-6 shadow-[0_8px_24px_rgba(20,34,58,0.06)] border border-brand-navy/5 flex flex-col items-center mb-6">
+                <h2 class="text-[16px] font-bold text-brand-navy mb-2">How was your experience?</h2>
+                <p class="text-[13px] text-brand-navy/60 text-center mb-5">Your feedback helps us improve ParkWise for everyone in Stockholm.</p>
+                
+                <div class="flex items-center gap-3">
+                    <button class="w-10 h-10 flex items-center justify-center text-brand-navy/20 hover:text-brand-gold transition-colors">
+                        <i class="fa-solid fa-star text-[28px]"></i>
+                    </button>
+                    <button class="w-10 h-10 flex items-center justify-center text-brand-navy/20 hover:text-brand-gold transition-colors">
+                        <i class="fa-solid fa-star text-[28px]"></i>
+                    </button>
+                    <button class="w-10 h-10 flex items-center justify-center text-brand-navy/20 hover:text-brand-gold transition-colors">
+                        <i class="fa-solid fa-star text-[28px]"></i>
+                    </button>
+                    <button class="w-10 h-10 flex items-center justify-center text-brand-navy/20 hover:text-brand-gold transition-colors">
+                        <i class="fa-solid fa-star text-[28px]"></i>
+                    </button>
+                    <button class="w-10 h-10 flex items-center justify-center text-brand-navy/20 hover:text-brand-gold transition-colors">
+                        <i class="fa-solid fa-star text-[28px]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Feedback Form -->
+            <div class="w-full bg-white rounded-[20px] p-5 shadow-[0_8px_24px_rgba(20,34,58,0.06)] border border-brand-navy/5 flex flex-col gap-4 mb-6">
+                
+                <!-- Topic Selection -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-[13px] font-semibold text-brand-navy pl-1">Topic</label>
+                    <div class="relative">
+                        <select class="w-full h-[48px] px-4 rounded-[12px] bg-brand-navy/5 border border-brand-navy/10 text-[14px] text-brand-navy appearance-none focus:outline-none focus:border-brand-navy/30 transition-colors">
+                            <option value="" disabled selected>Select a topic...</option>
+                            <option value="app">App Performance</option>
+                            <option value="map">Map & Navigation</option>
+                            <option value="payment">Booking & Payment</option>
+                            <option value="scanner">Sign Scanner</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-brand-navy/50">
+                            <i class="fa-solid fa-chevron-down text-[12px]"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Input -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-[13px] font-semibold text-brand-navy pl-1">Message</label>
+                    <textarea class="w-full h-[120px] p-4 rounded-[12px] bg-brand-navy/5 border border-brand-navy/10 text-[14px] text-brand-navy placeholder:text-brand-navy/40 resize-none focus:outline-none focus:border-brand-navy/30 transition-colors" placeholder="Tell us what went well or what could be better..."></textarea>
+                </div>
+
+                <!-- Image Attachment -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-[13px] font-semibold text-brand-navy pl-1">Attachment (Optional)</label>
+                    <button class="w-full h-[80px] rounded-[12px] border-2 border-dashed border-brand-navy/10 hover:border-brand-navy/30 bg-brand-navy/5 flex flex-col items-center justify-center gap-1.5 transition-colors group">
+                        <i class="fa-solid fa-cloud-arrow-up text-[20px] text-brand-navy/40 group-hover:text-brand-navy/60 transition-colors"></i>
+                        <span class="text-[12px] font-medium text-brand-navy/60 group-hover:text-brand-navy/80 transition-colors">Add Screenshot</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- System Info Toggle -->
+            <div class="w-full bg-white rounded-[16px] shadow-[0_4px_12px_rgba(20,34,58,0.04)] border border-brand-navy/5 overflow-hidden mb-8">
+                <button class="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-brand-navy/5 transition-colors" onclick="document.getElementById('sys-info').classList.toggle('hidden'); this.querySelector('.fa-chevron-down').classList.toggle('rotate-180')">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-mobile-screen text-[14px] text-brand-navy/50"></i>
+                        <span class="text-[13px] font-semibold text-brand-navy">Include System Info</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-[12px] text-brand-navy/40 transition-transform duration-200"></i>
+                </button>
+                
+                <div id="sys-info" class="hidden px-4 pb-4 pt-1 bg-brand-navy/5 border-t border-brand-navy/5">
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex justify-between text-[11px] font-mono">
+                            <span class="text-brand-navy/50">App Version</span>
+                            <span class="text-brand-navy font-medium">v2.4.1 (8472)</span>
+                        </div>
+                        <div class="flex justify-between text-[11px] font-mono">
+                            <span class="text-brand-navy/50">Device</span>
+                            <span class="text-brand-navy font-medium">iPhone 14 Pro</span>
+                        </div>
+                        <div class="flex justify-between text-[11px] font-mono">
+                            <span class="text-brand-navy/50">OS</span>
+                            <span class="text-brand-navy font-medium">iOS 16.5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button class="w-full h-[52px] rounded-[26px] bg-brand-navy text-white text-[15px] font-bold shadow-[0_8px_24px_rgba(20,34,58,0.2)] hover:bg-brand-navy/90 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mb-4">
+                Send Feedback
+            </button>
+            
+            <!-- Support Link -->
+            <button class="text-[13px] font-medium text-brand-blue hover:text-brand-blue/80 transition-colors">
+                Need help? Visit Support & FAQ
+            </button>
+
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved exactly from context, Profile Active) -->
+        <div id="footer" class="absolute bottom-0 left-0 w-full z-50 flex flex-col pointer-events-none">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5 pointer-events-auto">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Side Menu (Profile Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-bars text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Menu</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

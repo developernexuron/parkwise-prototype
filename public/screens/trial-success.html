@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Trial Confirmation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="trial-success">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-white text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col px-6 z-10 animate-fade-in relative overflow-y-auto pt-16 pb-10" style="scrollbar-width: none;">
+            
+            <!-- Success Header -->
+            <div id="success_header" class="flex flex-col items-center text-center mb-10">
+                <div class="w-20 h-20 rounded-full bg-brand-success/10 flex items-center justify-center mb-6">
+                    <i class="fa-solid fa-check text-brand-success text-4xl"></i>
+                </div>
+                <h1 class="text-[28px] font-bold text-brand-navy mb-3 tracking-tight">You're All Set!</h1>
+                <p class="text-[15px] text-gray-500 font-medium leading-relaxed">
+                    Your free trial is now active. Enjoy premium features for the next 14 days.
+                </p>
+            </div>
+
+            <!-- Trial Details Card -->
+            <div id="trial_details_card" class="bg-gray-50 border border-gray-100 rounded-[16px] p-6 mb-8 shadow-sm">
+                <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-200">
+                    <span class="text-[14px] font-semibold text-gray-500">Status</span>
+                    <span class="text-[14px] font-bold text-brand-gold bg-brand-gold/10 px-3 py-1 rounded-full">Free Trial Active</span>
+                </div>
+                
+                <div class="flex flex-col gap-4">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[14px] font-medium text-gray-500">Plan</span>
+                        <span class="text-[15px] font-semibold text-brand-navy">Premium Monthly</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[14px] font-medium text-gray-500">Next Billing Date</span>
+                        <span class="text-[15px] font-semibold text-brand-navy">Oct 24, 2023</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[14px] font-medium text-gray-500">Amount</span>
+                        <span class="text-[15px] font-semibold text-brand-navy">99 kr / month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subscription Management -->
+            <div id="subscription_management" class="text-center mb-10">
+                <p class="text-[13px] text-gray-500 leading-relaxed max-w-[280px] mx-auto mb-3">
+                    You won't be charged until your trial ends. Cancel anytime before Oct 24 to avoid charges.
+                </p>
+                <button class="text-[14px] font-semibold text-brand-navy hover:text-brand-gold transition-colors underline underline-offset-4 decoration-gray-300">
+                    Manage Subscription
+                </button>
+            </div>
+            
+            <!-- Spacer -->
+            <div class="flex-grow"></div>
+            
+            <!-- Primary Action Footer -->
+            <div id="primary_action_footer" class="flex flex-col gap-5 mt-auto shrink-0 w-full">
+                <button id="go-to-map-btn" class="w-full bg-brand-gold hover:bg-[#D5901F] text-brand-navy font-bold py-4 px-6 rounded-[8px] transition-colors shadow-[0_8px_20px_rgba(230,161,41,0.2)] flex items-center justify-center gap-2 text-[16px]">
+                    Go to map <i class="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+                
+                <!-- Trust & Restore Links -->
+                <div id="trust_restore_links" class="flex flex-col items-center gap-3 pb-2">
+                    <button class="text-[13px] font-semibold text-gray-400 hover:text-brand-navy transition-colors">
+                        Restore Purchases
+                    </button>
+                    <p class="text-[11px] text-gray-400 text-center px-4">
+                        Secure checkout via Apple/Google Play. Cancel anytime in settings.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const goToMapBtn = document.getElementById('go-to-map-btn');
+            
+            goToMapBtn.addEventListener('click', () => {
+                goToMapBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading map...';
+                goToMapBtn.classList.add('opacity-80', 'cursor-not-allowed');
+            });
+        });
+    </script>
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

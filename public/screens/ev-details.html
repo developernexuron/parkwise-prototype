@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - EV Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100',
+                            swishBlue: '#005596',
+                            blue: '#444CE7',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="ev-details">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-[#F9FAFB] text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header Image & Top Controls -->
+        <div class="relative h-[240px] w-full shrink-0">
+            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/da6677142f-9250a5fb007765dc9941.png" alt="Modern EV charging station on a sunny day in Stockholm, clean street, high quality photo" />
+            
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-navy/60 via-transparent to-[#F9FAFB]"></div>
+
+            <!-- Top Controls -->
+            <div class="absolute top-0 left-0 w-full z-30 pt-12 px-4 flex items-center justify-between pointer-events-auto">
+                <button class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full shadow-[0_2px_8px_rgba(20,34,58,0.15)] flex items-center justify-center text-white hover:bg-white/30 transition-colors border border-white/10">
+                    <i class="fa-solid fa-arrow-left text-[16px]"></i>
+                </button>
+                <div class="flex gap-2">
+                    <button class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full shadow-[0_2px_8px_rgba(20,34,58,0.15)] flex items-center justify-center text-white hover:bg-white/30 transition-colors border border-white/10">
+                        <i class="fa-regular fa-star text-[16px]"></i>
+                    </button>
+                    <button class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full shadow-[0_2px_8px_rgba(20,34,58,0.15)] flex items-center justify-center text-white hover:bg-white/30 transition-colors border border-white/10">
+                        <i class="fa-solid fa-share-nodes text-[16px]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Status Badge overlaying image -->
+            <div class="absolute bottom-6 left-4 flex items-center gap-2 z-10">
+                <div class="bg-brand-success/90 backdrop-blur-sm px-3 py-1.5 rounded-[8px] flex items-center gap-2 border border-brand-success/20 shadow-lg">
+                    <div class="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+                    <span class="text-[13px] font-bold text-white">Available (3/4)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 overflow-y-auto hide-scrollbar pb-[100px] -mt-4 relative z-20 bg-[#F9FAFB] rounded-t-[24px]">
+            
+            <!-- Handle (visual only) -->
+            <div class="w-full flex justify-center pt-3 pb-1">
+                <div class="w-10 h-1.5 bg-brand-navy/10 rounded-full"></div>
+            </div>
+
+            <div class="px-5 pt-2 pb-6 flex flex-col gap-6">
+                
+                <!-- Title & Operator -->
+                <div id="station-header">
+                    <h1 class="text-[24px] font-bold text-brand-navy leading-tight mb-1">Sveavägen 44</h1>
+                    <div class="flex items-center gap-2 text-[14px] text-brand-navy/60 font-medium">
+                        <i class="fa-solid fa-bolt text-brand-gold"></i>
+                        <span>Vattenfall InCharge</span>
+                        <span>•</span>
+                        <span>0.2 km away</span>
+                    </div>
+                </div>
+
+                <!-- Connectors Grid -->
+                <div id="connectors-section">
+                    <div class="flex justify-between items-end mb-3">
+                        <h2 class="text-[16px] font-bold text-brand-navy">Connectors</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        <!-- Connector 1 (Available) -->
+                        <div class="bg-white rounded-[16px] p-4 shadow-[0_2px_12px_rgba(20,34,58,0.06)] border border-brand-navy/5 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-brand-navy/5 rounded-full flex items-center justify-center border border-brand-navy/10">
+                                    <i class="fa-solid fa-plug text-brand-navy text-[20px]"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-0.5">
+                                        <span class="font-bold text-[15px] text-brand-navy">Type 2</span>
+                                        <div class="w-1 h-1 rounded-full bg-brand-navy/30"></div>
+                                        <span class="text-[13px] font-semibold text-brand-navy/70">22 kW</span>
+                                    </div>
+                                    <div class="text-[12px] font-medium text-brand-navy/50">ID: SE*VAT*E1234</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end gap-1">
+                                <div class="text-[14px] font-bold text-brand-navy">4.50 kr/kWh</div>
+                                <span class="text-[11px] font-bold text-brand-success bg-brand-success/10 px-2 py-0.5 rounded-[4px]">Available</span>
+                            </div>
+                        </div>
+
+                        <!-- Connector 2 (Available) -->
+                        <div class="bg-white rounded-[16px] p-4 shadow-[0_2px_12px_rgba(20,34,58,0.06)] border border-brand-navy/5 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-brand-navy/5 rounded-full flex items-center justify-center border border-brand-navy/10">
+                                    <i class="fa-solid fa-plug text-brand-navy text-[20px]"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-0.5">
+                                        <span class="font-bold text-[15px] text-brand-navy">Type 2</span>
+                                        <div class="w-1 h-1 rounded-full bg-brand-navy/30"></div>
+                                        <span class="text-[13px] font-semibold text-brand-navy/70">22 kW</span>
+                                    </div>
+                                    <div class="text-[12px] font-medium text-brand-navy/50">ID: SE*VAT*E1235</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end gap-1">
+                                <div class="text-[14px] font-bold text-brand-navy">4.50 kr/kWh</div>
+                                <span class="text-[11px] font-bold text-brand-success bg-brand-success/10 px-2 py-0.5 rounded-[4px]">Available</span>
+                            </div>
+                        </div>
+
+                        <!-- Connector 3 (In Use) -->
+                        <div class="bg-white rounded-[16px] p-4 shadow-[0_2px_12px_rgba(20,34,58,0.06)] border border-brand-navy/5 flex items-center justify-between opacity-70">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-brand-navy/5 rounded-full flex items-center justify-center border border-brand-navy/10">
+                                    <i class="fa-solid fa-plug text-brand-navy/60 text-[20px]"></i>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-0.5">
+                                        <span class="font-bold text-[15px] text-brand-navy">CCS</span>
+                                        <div class="w-1 h-1 rounded-full bg-brand-navy/30"></div>
+                                        <span class="text-[13px] font-semibold text-brand-navy/70">50 kW</span>
+                                    </div>
+                                    <div class="text-[12px] font-medium text-brand-navy/50">ID: SE*VAT*E1236</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-end gap-1">
+                                <div class="text-[14px] font-bold text-brand-navy">6.50 kr/kWh</div>
+                                <span class="text-[11px] font-bold text-brand-gold bg-brand-gold/10 px-2 py-0.5 rounded-[4px]">In Use</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Details -->
+                <div id="pricing-section" class="bg-white rounded-[20px] p-5 shadow-[0_4px_16px_rgba(20,34,58,0.04)] border border-brand-navy/5">
+                    <h3 class="text-[15px] font-bold text-brand-navy mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-tag text-brand-navy/60"></i> Pricing Details
+                    </h3>
+                    
+                    <div class="flex flex-col gap-3">
+                        <div class="flex justify-between items-center pb-3 border-b border-brand-navy/5">
+                            <span class="text-[14px] text-brand-navy/70 font-medium">Energy Fee</span>
+                            <span class="text-[14px] font-bold text-brand-navy">From 4.50 kr/kWh</span>
+                        </div>
+                        <div class="flex justify-between items-center pb-3 border-b border-brand-navy/5">
+                            <span class="text-[14px] text-brand-navy/70 font-medium">Starting Fee</span>
+                            <span class="text-[14px] font-bold text-brand-navy">0.00 kr</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-[14px] text-brand-navy/70 font-medium">Idle Fee (after 4h)</span>
+                            <span class="text-[14px] font-bold text-brand-navy">1.50 kr/min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions / Utilities -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="bg-white rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 shadow-[0_2px_12px_rgba(20,34,58,0.04)] border border-brand-navy/5 hover:bg-gray-50 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-brand-navy/5 flex items-center justify-center">
+                            <i class="fa-solid fa-location-arrow text-brand-navy text-[16px]"></i>
+                        </div>
+                        <span class="text-[13px] font-bold text-brand-navy">Get Directions</span>
+                    </button>
+                    <button class="bg-white rounded-[16px] p-4 flex flex-col items-center justify-center gap-2 shadow-[0_2px_12px_rgba(20,34,58,0.04)] border border-brand-navy/5 hover:bg-gray-50 transition-colors">
+                        <div class="w-10 h-10 rounded-full bg-brand-danger/10 flex items-center justify-center">
+                            <i class="fa-solid fa-circle-exclamation text-brand-danger text-[16px]"></i>
+                        </div>
+                        <span class="text-[13px] font-bold text-brand-danger">Report Issue</span>
+                    </button>
+                </div>
+
+                <!-- Deep Link CTA -->
+                <button class="w-full h-[56px] bg-brand-navy text-white rounded-[16px] font-bold text-[16px] shadow-[0_8px_24px_rgba(20,34,58,0.2)] hover:bg-brand-navy/90 transition-colors flex items-center justify-center gap-2 mt-2">
+                    <i class="fa-solid fa-bolt"></i> Start Charging
+                </button>
+
+                <!-- Spacer for bottom scroll -->
+                <div class="h-4"></div>
+            </div>
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved exactly from context) -->
+        <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col pointer-events-none">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5 pointer-events-auto">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Side Menu (Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-bars text-[18px]"></i>
+                        <div class="absolute top-1 right-2 w-2 h-2 bg-brand-danger rounded-full border border-white"></div>
+                    </div>
+                    <span class="text-[10px] font-bold">Menu</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>

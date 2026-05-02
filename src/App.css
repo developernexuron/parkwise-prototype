@@ -1,0 +1,109 @@
+.pw-root {
+  margin: 0;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.pw-chrome {
+  flex-shrink: 0;
+  background: #14223a;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6px 10px 4px;
+  box-sizing: border-box;
+}
+
+.pw-chrome-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-height: 36px;
+}
+
+.pw-subbar {
+  padding-bottom: 4px;
+}
+
+.pw-brand {
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-right: 8px;
+  color: #e6a129;
+}
+
+.pw-btn {
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+}
+
+.pw-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pw-btn:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.pw-select {
+  flex: 1;
+  min-width: 140px;
+  max-width: min(420px, 50vw);
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #1e293b;
+  color: #fff;
+}
+
+.pw-hint {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: system-ui, sans-serif;
+}
+
+/* Remaining space below chrome — measured for scale-to-fit */
+.pw-main {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: radial-gradient(circle at center, #1e3354 0%, #14223a 100%);
+}
+
+/* Clips the scaled iframe to 375×812 × scale so nothing spills past desktop vh */
+.pw-scale-clip {
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: 0;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Intrinsic design size; visual size reduced via transform in inline style */
+.pw-frame {
+  border: none;
+  display: block;
+  background: #fff;
+}

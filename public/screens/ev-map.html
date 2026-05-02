@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en"><head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - EV Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100',
+                            swishBlue: '#005596',
+                            blue: '#444CE7', // From user doc for links/accent, but using for EV map as requested in prompt "blue markers"
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="ev-map">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-[#F9FAFB] text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Map Canvas (Background) -->
+        <div class="absolute inset-0 z-0">
+            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/d213804645-e539f9f5e153e30e58c2.png" alt="Clean minimal light-themed street map with straight grid-pattern roads, light gray streets in perpendicular layout, subtle green parks, top-down orthogonal view, modern city map UI with straight avenues and boulevards, high quality mobile map interface">
+        </div>
+
+        <!-- Top Controls Overlay -->
+        <div class="absolute top-0 left-0 w-full z-30 pt-12 px-4 flex flex-col gap-3 pointer-events-none">
+            
+            <!-- Map Actions Row -->
+            <div class="flex items-center justify-between w-full pointer-events-auto">
+                <button class="w-10 h-10 bg-white rounded-full shadow-[0_2px_8px_rgba(20,34,58,0.15)] flex items-center justify-center text-brand-navy hover:bg-gray-50 transition-colors border border-brand-navy/5">
+                    <i class="fa-solid fa-arrow-left text-[16px]"></i>
+                </button>
+                <div class="flex gap-2">
+                    <button class="w-10 h-10 bg-white rounded-full shadow-[0_2px_8px_rgba(20,34,58,0.15)] flex items-center justify-center text-brand-navy hover:bg-gray-50 transition-colors border border-brand-navy/5">
+                        <i class="fa-solid fa-location-crosshairs text-[16px]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Floating Filters Bar -->
+            <div class="w-full overflow-x-auto hide-scrollbar pointer-events-auto pb-2">
+                <div class="flex items-center gap-2 px-1">
+                    <button class="h-9 px-4 bg-brand-navy text-white rounded-full text-[13px] font-bold shadow-[0_2px_8px_rgba(20,34,58,0.2)] flex items-center gap-2 whitespace-nowrap border border-brand-navy">
+                        <i class="fa-solid fa-bolt text-[12px]"></i>
+                        Type 2
+                    </button>
+                    <button class="h-9 px-4 bg-white text-brand-navy rounded-full text-[13px] font-medium shadow-[0_2px_8px_rgba(20,34,58,0.1)] flex items-center gap-2 whitespace-nowrap border border-brand-navy/10 hover:bg-gray-50">
+                        CCS
+                    </button>
+                    <button class="h-9 px-4 bg-white text-brand-navy rounded-full text-[13px] font-medium shadow-[0_2px_8px_rgba(20,34,58,0.1)] flex items-center gap-2 whitespace-nowrap border border-brand-navy/10 hover:bg-gray-50">
+                        CHAdeMO
+                    </button>
+                    <button class="h-9 px-4 bg-white text-brand-navy rounded-full text-[13px] font-medium shadow-[0_2px_8px_rgba(20,34,58,0.1)] flex items-center gap-2 whitespace-nowrap border border-brand-navy/10 hover:bg-gray-50">
+                        <i class="fa-solid fa-filter text-[12px] text-brand-navy/60"></i>
+                        Price
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Markers Overlay -->
+        <div class="absolute inset-0 z-10 pointer-events-none">
+            
+            <!-- Selected Station Marker (Center) -->
+            <div class="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-auto">
+                <div class="bg-brand-blue text-white px-3 py-1.5 rounded-[8px] text-[12px] font-bold shadow-[0_4px_12px_rgba(20,34,58,0.2)] mb-1 flex items-center gap-1.5">
+                    <div class="w-2 h-2 rounded-full bg-brand-success"></div>
+                    3/4 Free
+                </div>
+                <div class="w-12 h-12 bg-white rounded-full shadow-[0_4px_16px_rgba(20,34,58,0.2)] flex items-center justify-center border-[3px] border-brand-blue relative z-10">
+                    <i class="fa-solid fa-charging-station text-brand-blue text-[18px]"></i>
+                </div>
+                <div class="w-4 h-4 bg-white rotate-45 -mt-3 shadow-[0_4px_16px_rgba(20,34,58,0.2)] border-b-[3px] border-r-[3px] border-brand-blue"></div>
+            </div>
+
+            <!-- Other Station Marker 1 -->
+            <div class="absolute top-[25%] left-[20%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-auto opacity-80 hover:opacity-100 transition-opacity">
+                <div class="bg-white text-brand-navy px-2 py-1 rounded-[6px] text-[10px] font-bold shadow-[0_2px_8px_rgba(20,34,58,0.15)] mb-1 flex items-center gap-1 border border-brand-navy/5">
+                    <div class="w-1.5 h-1.5 rounded-full bg-brand-danger"></div>
+                    Full
+                </div>
+                <div class="w-8 h-8 bg-brand-navy/5 rounded-full shadow-sm flex items-center justify-center border-2 border-brand-navy/20">
+                    <i class="fa-solid fa-charging-station text-brand-navy/60 text-[12px]"></i>
+                </div>
+            </div>
+
+            <!-- Other Station Marker 2 -->
+            <div class="absolute top-[60%] left-[75%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-auto opacity-80 hover:opacity-100 transition-opacity">
+                <div class="bg-white text-brand-navy px-2 py-1 rounded-[6px] text-[10px] font-bold shadow-[0_2px_8px_rgba(20,34,58,0.15)] mb-1 flex items-center gap-1 border border-brand-navy/5">
+                    <div class="w-1.5 h-1.5 rounded-full bg-brand-success"></div>
+                    1/2 Free
+                </div>
+                <div class="w-8 h-8 bg-brand-navy/5 rounded-full shadow-sm flex items-center justify-center border-2 border-brand-navy/20">
+                    <i class="fa-solid fa-charging-station text-brand-navy/60 text-[12px]"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Station Quick Action Card (Slide-up) -->
+        <div class="absolute bottom-[90px] left-0 w-full z-40 px-4 pb-4 pointer-events-none flex flex-col justify-end">
+            <div class="bg-white rounded-[24px] shadow-[0_8px_32px_rgba(20,34,58,0.12)] border border-brand-navy/5 pointer-events-auto overflow-hidden">
+                
+                <!-- Handle -->
+                <div class="w-full flex justify-center pt-3 pb-2">
+                    <div class="w-10 h-1.5 bg-brand-navy/10 rounded-full"></div>
+                </div>
+
+                <!-- Content -->
+                <div class="px-5 pb-5">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h2 class="text-[20px] font-bold text-brand-navy leading-tight">Sveavägen 44</h2>
+                            <p class="text-[13px] text-brand-navy/60 font-medium mt-0.5">Vattenfall InCharge • 0.2 km away</p>
+                        </div>
+                        <button class="w-8 h-8 rounded-full bg-brand-navy/5 flex items-center justify-center text-brand-navy/40 hover:text-brand-gold hover:bg-brand-gold/10 transition-colors">
+                            <i class="fa-regular fa-star text-[14px]"></i>
+                        </button>
+                    </div>
+
+                    <!-- Status & Connectors -->
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-brand-success/10 px-2.5 py-1 rounded-[6px] flex items-center gap-1.5 border border-brand-success/20">
+                            <div class="w-2 h-2 rounded-full bg-brand-success"></div>
+                            <span class="text-[12px] font-bold text-brand-success">Available (3/4)</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-[12px] font-medium text-brand-navy/70">
+                            <i class="fa-solid fa-bolt text-brand-gold"></i>
+                            <span>Type 2 • 22kW</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-[1px] bg-brand-navy/5 mb-4"></div>
+
+                    <!-- Actions -->
+                    <div class="flex gap-3">
+                        <button class="flex-1 h-[48px] bg-brand-navy text-white rounded-[16px] font-bold text-[15px] shadow-[0_4px_12px_rgba(20,34,58,0.15)] hover:bg-brand-navy/90 transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-location-arrow"></i> Navigate
+                        </button>
+                        <button class="w-[48px] h-[48px] bg-brand-navy/5 text-brand-navy rounded-[16px] font-bold text-[15px] border border-brand-navy/10 hover:bg-brand-navy/10 transition-colors flex items-center justify-center">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved from context) -->
+        <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Side Menu (Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-bars text-[18px]"></i>
+                        <div class="absolute top-1 right-2 w-2 h-2 bg-brand-danger rounded-full border border-white"></div>
+                    </div>
+                    <span class="text-[10px] font-bold">Menu</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body></html>

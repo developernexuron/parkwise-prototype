@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ParkWise - Subscriptions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            navy: '#14223A',
+                            gold: '#E6A129',
+                            success: '#28A745',
+                            danger: '#DC3545',
+                            gray: '#1C1C1E',
+                            lightGray: '#2C2C2E',
+                            muted: '#8E8E93',
+                            swish: '#FFD100',
+                            swishBlue: '#005596',
+                            blue: '#444CE7',
+                        }
+                    },
+                    backgroundImage: {
+                        'radial-gradient': 'radial-gradient(circle at center, #1E3354 0%, #14223A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #14223A;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-radial-gradient min-h-[100dvh] flex flex-col items-center justify-center relative m-0 p-0" data-pw-screen="subscriptions">
+
+    <!-- Mobile Container Wrapper -->
+    <div id="app-container" class="w-full max-w-[375px] h-[100dvh] mx-auto relative flex flex-col px-0 pt-0 z-10 bg-[#F9FAFB] text-brand-navy rounded-none sm:rounded-[40px] sm:h-[812px] sm:my-8 overflow-hidden shadow-2xl">
+        
+        <!-- Header -->
+        <div class="pt-12 pb-4 px-5 bg-white shadow-[0_2px_12px_rgba(20,34,58,0.04)] relative z-30 border-b border-brand-navy/5 flex items-center gap-3">
+            <button class="w-8 h-8 flex items-center justify-center rounded-full bg-brand-navy/5 text-brand-navy hover:bg-brand-navy/10 transition-colors">
+                <i class="fa-solid fa-arrow-left text-[14px]"></i>
+            </button>
+            <h1 class="text-[20px] font-bold text-brand-navy">Subscription</h1>
+        </div>
+
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 overflow-y-auto hide-scrollbar pb-[100px] bg-[#F9FAFB]">
+            
+            <div class="px-5 py-6">
+                
+                <!-- Current Status Card -->
+                <div class="bg-brand-navy rounded-[24px] p-6 shadow-[0_8px_24px_rgba(20,34,58,0.15)] mb-8 relative overflow-hidden text-white">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-brand-gold/20 rounded-full blur-[30px] -mr-10 -mt-10"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-brand-blue/20 rounded-full blur-[30px] -ml-10 -mb-10"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="text-[13px] text-white/70 font-medium mb-1 uppercase tracking-wider">Current Plan</p>
+                                <h2 class="text-[24px] font-bold flex items-center gap-2">
+                                    Premium <i class="fa-solid fa-crown text-brand-gold text-[16px]"></i>
+                                </h2>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/20 text-[12px] font-medium flex items-center gap-1.5">
+                                <div class="w-2 h-2 rounded-full bg-brand-success"></div> Active
+                            </div>
+                        </div>
+
+                        <div class="bg-white/10 rounded-[16px] p-4 border border-white/10 mb-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[13px] text-white/80">Trial Ends In</span>
+                                <span class="text-[14px] font-bold text-brand-gold">5 Days</span>
+                            </div>
+                            <div class="w-full bg-white/20 rounded-full h-1.5">
+                                <div class="bg-brand-gold h-1.5 rounded-full" style="width: 70%"></div>
+                            </div>
+                        </div>
+
+                        <p class="text-[13px] text-white/70">Next charge: 99 SEK on Oct 15, 2024</p>
+                    </div>
+                </div>
+
+                <!-- Plan Comparison -->
+                <div class="mb-8">
+                    <h3 class="text-[16px] font-bold text-brand-navy mb-4">Plan Comparison</h3>
+                    
+                    <div class="flex gap-4 mb-6">
+                        <!-- Free Plan Card -->
+                        <div class="flex-1 bg-white rounded-[20px] p-5 border border-brand-navy/10 shadow-[0_2px_12px_rgba(20,34,58,0.04)]">
+                            <h4 class="text-[18px] font-bold text-brand-navy mb-1">Free</h4>
+                            <p class="text-[14px] text-brand-navy/60 mb-4">Basic parking</p>
+                            
+                            <ul class="space-y-3 mb-6">
+                                <li class="flex items-start gap-2 text-[13px] text-brand-navy/80">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Find parking spots</span>
+                                </li>
+                                <li class="flex items-start gap-2 text-[13px] text-brand-navy/80">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Basic booking</span>
+                                </li>
+                                <li class="flex items-start gap-2 text-[13px] text-brand-navy/40">
+                                    <i class="fa-solid fa-xmark mt-0.5"></i>
+                                    <span>AI Sign Scanner</span>
+                                </li>
+                            </ul>
+                            
+                            <button class="w-full py-2.5 rounded-[12px] border border-brand-navy/20 text-[13px] font-bold text-brand-navy hover:bg-brand-navy/5 transition-colors">
+                                Downgrade
+                            </button>
+                        </div>
+
+                        <!-- Premium Plan Card -->
+                        <div class="flex-1 bg-brand-navy/5 rounded-[20px] p-5 border-2 border-brand-navy relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-brand-navy text-white text-[10px] font-bold px-2 py-1 rounded-bl-[12px]">CURRENT</div>
+                            <h4 class="text-[18px] font-bold text-brand-navy mb-1">Premium</h4>
+                            <p class="text-[14px] text-brand-navy/60 mb-4">99 SEK/mo</p>
+                            
+                            <ul class="space-y-3 mb-6">
+                                <li class="flex items-start gap-2 text-[13px] text-brand-navy font-medium">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Everything in Free</span>
+                                </li>
+                                <li class="flex items-start gap-2 text-[13px] text-brand-navy font-medium">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>AI Sign Scanner</span>
+                                </li>
+                                <li class="flex items-start gap-2 text-[13px] text-brand-navy font-medium">
+                                    <i class="fa-solid fa-check text-brand-success mt-0.5"></i>
+                                    <span>Street cleaning alerts</span>
+                                </li>
+                            </ul>
+                            
+                            <button class="w-full py-2.5 rounded-[12px] bg-brand-navy text-white text-[13px] font-bold opacity-50 cursor-not-allowed">
+                                Active Plan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Billing Management -->
+                <div class="mb-8">
+                    <h3 class="text-[16px] font-bold text-brand-navy mb-4">Billing & Payment</h3>
+                    <div class="bg-white rounded-[20px] shadow-[0_2px_12px_rgba(20,34,58,0.04)] border border-brand-navy/5 overflow-hidden">
+                        
+                        <div class="p-4 border-b border-brand-navy/5 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-[10px] bg-brand-navy/5 flex items-center justify-center text-brand-navy">
+                                    <i class="fa-brands fa-cc-visa text-[20px]"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[14px] font-medium text-brand-navy">Visa ending in 4242</p>
+                                    <p class="text-[12px] text-brand-navy/50">Expires 12/25</p>
+                                </div>
+                            </div>
+                            <button class="text-[13px] font-medium text-brand-blue hover:underline">Edit</button>
+                        </div>
+                        
+                        <button class="w-full p-4 flex items-center justify-between hover:bg-brand-navy/5 transition-colors text-left border-b border-brand-navy/5">
+                            <span class="text-[14px] font-medium text-brand-navy">Billing History</span>
+                            <i class="fa-solid fa-chevron-right text-[12px] text-brand-navy/30"></i>
+                        </button>
+
+                        <button class="w-full p-4 flex items-center justify-between hover:bg-brand-navy/5 transition-colors text-left">
+                            <span class="text-[14px] font-medium text-brand-navy">Restore Purchases</span>
+                            <i class="fa-solid fa-rotate-right text-[14px] text-brand-navy/50"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cancellation -->
+                <div>
+                    <button class="w-full py-4 rounded-[16px] border border-brand-danger/20 text-[14px] font-medium text-brand-danger hover:bg-brand-danger/5 transition-colors">
+                        Cancel Subscription
+                    </button>
+                    <p class="text-center text-[12px] text-brand-navy/50 mt-3 px-4">
+                        If you cancel, you will still have access to Premium features until the end of your current billing cycle (Oct 15, 2024).
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BOTTOM UI: Navigation (Preserved exactly from context, Profile Active) -->
+        <div class="absolute bottom-0 left-0 w-full z-50 flex flex-col pointer-events-none">
+            <!-- Bottom Navigation Bar -->
+            <div class="bg-white rounded-t-[24px] shadow-[0_-4px_20px_rgba(0,0,0,0.05)] px-6 py-4 pb-8 flex items-center justify-between relative z-50 text-brand-navy border-t border-brand-navy/5 pointer-events-auto">
+                
+                <!-- Home Map -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Map</span>
+                </button>
+
+                <!-- Search/Filters -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">Search</span>
+                </button>
+
+                <!-- Scanner -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy relative -top-6">
+                    <div class="w-14 h-14 bg-brand-navy rounded-full flex items-center justify-center text-white shadow-[0_8px_16px_rgba(20,34,58,0.3)] border-4 border-white">
+                        <i class="fa-solid fa-camera text-[22px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold mt-1">Scan</span>
+                </button>
+
+                <!-- Bookings History -->
+                <button class="flex flex-col items-center gap-1 text-gray-400 hover:text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-clock-rotate-left text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-medium">History</span>
+                </button>
+
+                <!-- Side Menu (Profile Active) -->
+                <button class="flex flex-col items-center gap-1 text-brand-navy transition-colors">
+                    <div class="w-12 h-8 flex items-center justify-center relative">
+                        <i class="fa-solid fa-bars text-[18px]"></i>
+                    </div>
+                    <span class="text-[10px] font-bold">Menu</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+
+<script defer src="/prototype-bridge.js"></script>
+</body>
+</html>
